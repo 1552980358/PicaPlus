@@ -1,0 +1,33 @@
+[versions]
+android-gradle-plugin = "8.3.1"
+androidx-compose-activity = "1.8.2"
+androidx-compose-bom = "2024.03.00"
+androidx-core-ktx = "1.12.0"
+androidx-espresso = "3.5.1"
+androidx-junit = "1.1.5"
+androidx-lifecycle = "2.7.0"
+kotlin = "1.9.23"
+junit = "4.13.2"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-compose-activity" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidx-compose-bom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+# Test dependencies
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
