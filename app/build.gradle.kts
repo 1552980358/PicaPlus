@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.jetbrains.kotlinx.serialization)
+    alias(libs.plugins.google.protobuf)
 }
 
 android {
@@ -53,15 +54,32 @@ android {
     }
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:4.26.0"
+    }
+    generateProtoTasks {
+        all().forEach { generateProtoTask ->
+            generateProtoTask.builtins {
+                val java by creating {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.datastore)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.google.protobuf.kotlin.lite)
     implementation(libs.jetbrains.kotlinx.serialization.json)
     implementation(libs.squareup.okhttp)
 
