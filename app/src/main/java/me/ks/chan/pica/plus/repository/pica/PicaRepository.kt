@@ -30,7 +30,20 @@ private val PicaRepositoryRequestMediaType by lazy {
     ContentTypeJson.toMediaType()
 }
 
+private var picaAuthorizationState: PicaAuthorizationState =
+    PicaAuthorizationState.Unauthorized
+
 object PicaRepository {
+
+    val isAuthorized: Boolean
+        get() = picaAuthorizationState is PicaAuthorizationState.Authorized
+
+    fun authorization(token: String? = null) {
+        when (token) {
+            null -> PicaAuthorizationState.Unauthorized
+            else -> picaAuthorizationState = PicaAuthorizationState.Authorized(token)
+        }
+    }
 
     suspend inline fun get(path: String): Response =
         request(RequestMethod.Get, path)
@@ -57,7 +70,6 @@ object PicaRepository {
 private object PicaRepositoryInterceptor: Interceptor {
 
     private const val AUTHORIZATION = "Authorization"
-    var authorization: String? = null
 
     override fun intercept(chain: Interceptor.Chain): Response {
         return chain.request()
@@ -67,14 +79,14 @@ private object PicaRepositoryInterceptor: Interceptor {
 
     private fun addAuthorizationHeader(
         request: Request,
-        authorizationToken: String? = this.authorization
-    ): Request = when {
-        !authorizationToken.isNullOrBlank() -> {
+        authorizationState: PicaAuthorizationState = picaAuthorizationState
+    ): Request = when (authorizationState) {
+        is PicaAuthorizationState.Authorized -> {
             request.newBuilder()
                 .headers(
                     request.headers
                         .newBuilder()
-                        .add(AUTHORIZATION, authorizationToken)
+                        .add(AUTHORIZATION, authorizationState.token)
                         .build()
                 )
                 .build()
