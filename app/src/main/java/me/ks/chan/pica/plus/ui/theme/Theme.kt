@@ -48,13 +48,9 @@ private fun setupSystemBars(
     isDarkTheme: Boolean,
     window: Window = (view.context as Activity).window
 ) {
-    // Background color
-    window.statusBarColor = Color.Transparent.toArgb()
-    window.navigationBarColor = Color.Transparent.toArgb()
-
     with(WindowCompat.getInsetsController(window, view)) {
         // Appearance (icons, text)
-        isAppearanceLightStatusBars = isDarkTheme
-        isAppearanceLightNavigationBars = isDarkTheme
+        isAppearanceLightStatusBars = !isDarkTheme
+        isAppearanceLightNavigationBars = !isDarkTheme
     }
 }
