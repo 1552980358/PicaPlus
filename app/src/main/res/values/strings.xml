@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">PicaPlus</string>
+
+    <string name="action_ok">@android:string/ok</string>
+
+    <string name="screen_sign_in_text_title">Sign in</string>
+    <string name="screen_sign_in_field_username_label">Username</string>
+    <string name="screen_sign_in_field_password_label">Password</string>
+    <string name="screen_sign_in_field_password_supporting">Both username and password are case sensitive</string>
+    <string name="screen_sign_in_field_password_error">Invalid username and/or password</string>
+    <string name="screen_sign_in_button_forgot_text">Forgot password?</string>
+    <string name="screen_sign_in_button_create_text">Create account</string>
+    <string name="screen_sign_in_button_sign_in_text">Sign in</string>
+    <string name="screen_sign_in_dialog_text_title">Error occurs</string>
+    <string name="screen_sign_in_dialog_text_error_connection">Connection error.</string>
+    <string name="screen_sign_in_dialog_text_error_invalid_response">Invalid response error.</string>
+    <string name="screen_sign_in_dialog_text_error_unexpected_exception">Unexpected exception occurs.</string>
+
 </resources>
