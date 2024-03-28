@@ -7,7 +7,7 @@ private const val FieldCode = "code"
 private const val FieldMessage = "message"
 
 @Serializable
-abstract class PicaRepositoryResponseBody {
+abstract class PicaRepositoryResponse {
     @SerialName(FieldCode)
     abstract val code: Int
     @SerialName(FieldMessage)
@@ -17,7 +17,7 @@ abstract class PicaRepositoryResponseBody {
 private const val FieldData = "data"
 
 @Serializable
-abstract class PicaRepositoryResponseDataBody<D>: PicaRepositoryResponseBody() {
+abstract class PicaRepositoryDataResponse<D>: PicaRepositoryResponse() {
     @SerialName(FieldData)
     abstract val data: D
 }
@@ -26,11 +26,11 @@ private const val FieldError = "error"
 private const val FieldDetail = "detail"
 
 @Serializable
-data class PicaRepositoryResponseErrorBody(
+data class PicaRepositoryErrorResponse(
     override val code: Int,
     override val message: String,
     @SerialName(FieldError)
     val error: String,
     @SerialName(FieldDetail)
     val detail: String
-): PicaRepositoryResponseBody()
+): PicaRepositoryResponse()

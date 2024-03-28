@@ -5,8 +5,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
-import me.ks.chan.pica.plus.repository.pica.PicaRepositoryResponseDataBody
-import me.ks.chan.pica.plus.repository.pica.PicaRepositoryResponseErrorBody
+import me.ks.chan.pica.plus.repository.pica.PicaRepositoryDataResponse
+import me.ks.chan.pica.plus.repository.pica.PicaRepositoryErrorResponse
 import me.ks.chan.pica.plus.util.okhttp.RequestSuccess
 
 private const val RequestFieldUsername = "email"
@@ -21,7 +21,7 @@ private data class RequestBody(
 
 private const val ResponseDataFieldToken = "token"
 @Serializable
-private class ResponseBodyData(
+private data class Data(
     @SerialName(ResponseDataFieldToken)
     val token: String
 )
@@ -30,8 +30,8 @@ private class ResponseBodyData(
 private class ResponseBody(
     override val code: Int,
     override val message: String,
-    override val data: ResponseBodyData
-): PicaRepositoryResponseDataBody<ResponseBodyData>()
+    override val data: Data
+): PicaRepositoryDataResponse<Data>()
 
 private const val SignInApiPath = "auth/sign-in"
 class PicaSignInRepository(
@@ -46,17 +46,17 @@ class PicaSignInRepository(
 
         val result = when (response.code) {
             RequestSuccess -> {
-                val responseDataBody: ResponseBody? = response.body
+                val responseBody: ResponseBody? = response.body
                     ?.string()
                     ?.let(Json::decodeFromString)
 
-                responseDataBody?.data
+                responseBody?.data
                     ?.token
                     ?.let(PicaSignInRepositoryResult::Success)
                     ?: PicaSignInRepositoryResult.Error(null)
             }
             else -> {
-                val responseErrorBody: PicaRepositoryResponseErrorBody? = response.body
+                val responseErrorBody: PicaRepositoryErrorResponse? = response.body
                     ?.string()
                     ?.let(Json::decodeFromString)
 
