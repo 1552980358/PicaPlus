@@ -39,9 +39,9 @@ object PicaRepository {
         get() = picaAuthorizationState is PicaAuthorizationState.Authorized
 
     fun authorization(token: String? = null) {
-        when (token) {
-            null -> PicaAuthorizationState.Unauthorized
-            else -> picaAuthorizationState = PicaAuthorizationState.Authorized(token)
+        picaAuthorizationState = when {
+            token.isNullOrBlank() -> PicaAuthorizationState.Unauthorized
+            else -> PicaAuthorizationState.Authorized(token)
         }
     }
 
