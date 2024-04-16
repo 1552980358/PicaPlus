@@ -2,7 +2,6 @@ package me.ks.chan.pica.plus.repository.pica
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.io.File
 
 private const val FieldName = "originalName"
 private const val FieldHost = "fileServer"
