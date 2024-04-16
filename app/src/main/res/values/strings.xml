@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">PicaPlus</string>
 
+    <string name="action_cancel">@android:string/cancel</string>
     <string name="action_ok">@android:string/ok</string>
+    <string name="action_retry">Retry</string>
 
     <string name="screen_sign_in_text_title">Sign in</string>
     <string name="screen_sign_in_field_username_label">Username</string>
@@ -15,5 +17,15 @@
     <string name="screen_sign_in_dialog_text_error_connection">Connection error.</string>
     <string name="screen_sign_in_dialog_text_error_invalid_response">Invalid response error.</string>
     <string name="screen_sign_in_dialog_text_error_unexpected_exception">Unexpected exception occurs.</string>
+
+    <string name="screen_greeting_text_state_loading">Loading account metadata…</string>
+    <string name="screen_greeting_text_state_success">Welcome back</string>
+    <string name="screen_greeting_image_description_avatar">Avatar</string>
+    <string name="screen_greeting_dialog_error_title">Request Account Metadata Failed</string>
+    <string name="screen_greeting_dialog_error_text_connection">Connection error occurred when requesting account Metadata.</string>
+    <string name="screen_greeting_dialog_error_text_invalid">Invalid content was responded when requesting account Metadata.</string>
+    <string name="screen_greeting_dialog_error_text_unauthorized">Unauthorized status code was received when requesting account Metadata.</string>
+    <string name="screen_greeting_dialog_error_text_unknown">Unknown error was caught when requesting account Metadata.</string>
+
 
 </resources>
