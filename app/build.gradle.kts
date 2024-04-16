@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.google.protobuf.kotlin.lite)
     implementation(libs.jetbrains.kotlinx.serialization.json)
     implementation(libs.squareup.okhttp)
+    implementation(libs.io.coil.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
