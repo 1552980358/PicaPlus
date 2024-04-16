@@ -1,10 +1,10 @@
 package me.ks.chan.pica.plus.repository.pica
 
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import me.ks.chan.pica.plus.util.kotlin.Blank
 import me.ks.chan.pica.plus.util.kotlinx.coroutine.defaultBlocking
 import me.ks.chan.pica.plus.util.kotlinx.coroutine.ioBlocking
+import me.ks.chan.pica.plus.util.okhttp.Get
+import me.ks.chan.pica.plus.util.okhttp.Post
 import me.ks.chan.pica.plus.util.okhttp.RequestMethod
 import okhttp3.Headers
 import okhttp3.Interceptor
@@ -26,9 +26,6 @@ private val PicaRepositoryClient by lazy {
 }
 
 private const val ContentTypeJson = "application/json; charset=UTF-8"
-private val PicaRepositoryRequestMediaType by lazy {
-    ContentTypeJson.toMediaType()
-}
 
 private var picaAuthorizationState: PicaAuthorizationState =
     PicaAuthorizationState.Unauthorized
@@ -46,23 +43,16 @@ object PicaRepository {
     }
 
     suspend inline fun get(path: String): Response =
-        request(RequestMethod.Get, path)
+        request(Get(path))
 
     suspend inline fun <reified Body> post(path: String, body: Body): Response =
-        request(RequestMethod.Post, path, body.let(Json::encodeToString))
+        request(Post(path, body))
 
     suspend fun request(
-        requestMethod: RequestMethod, path: String, body: String? = null
+        requestMethod: RequestMethod
     ): Response = ioBlocking {
-        PicaRepositoryClient
-            .newCall(buildRequest(requestMethod, buildRequestBody(body), path))
+        PicaRepositoryClient.newCall(buildRequest(requestMethod))
             .execute()
-    }
-
-    private suspend fun buildRequestBody(
-        body: String?
-    ): RequestBody? = defaultBlocking {
-        body?.toRequestBody(PicaRepositoryRequestMediaType)
     }
 
 }
@@ -118,21 +108,28 @@ private const val HeaderTime = "Time"
 private const val HeaderNonce = "Nonce"
 private const val HeaderSignature = "Signature"
 private suspend fun buildRequest(
-    requestMethod: RequestMethod,
-    requestBody: RequestBody?,
-    path: String,
-    time: String = timeStr,
-    nonce: String = nonceStr,
-    secretContent: String = path + time + nonce + requestMethod.method + PicaApiKey
+    requestMethod: RequestMethod, time: String = timeStr, nonce: String = nonceStr,
 ): Request {
     return Request.Builder()
-        .url(PicaApiHost + path)
-        .method(requestMethod.method, requestBody)
+        .url(PicaApiHost + requestMethod.path)
+        .method(requestMethod.method, buildRequestBody(requestMethod))
         .headers(PicaApiHeadersBuilder)
         .header(HeaderNonce, nonce)
         .header(HeaderTime, time)
-        .header(HeaderSignature, signature(PicApiPublicKey, secretContent))
+        .header(HeaderSignature, signRequest(requestMethod, time, nonce))
         .build()
+}
+
+private suspend fun buildRequestBody(
+    requestMethod: RequestMethod
+): RequestBody? = defaultBlocking {
+    when (requestMethod) {
+        is RequestMethod.Post -> {
+            requestMethod.method
+                .toRequestBody(ContentTypeJson.toMediaType())
+        }
+        else -> { null }
+    }
 }
 
 private const val UuidDivider = "-"
@@ -146,16 +143,19 @@ private val timeStr: String
 
 @Suppress("SpellCheckingInspection")
 private const val HMacSHA256 = "HmacSHA256"
-private suspend fun signature(
-    publicKey: String, secretContent: String
+private suspend fun signRequest(
+    requestMethod: RequestMethod, time: String, nonce: String
 ): String = defaultBlocking {
     Mac.getInstance(HMacSHA256)
-        .apply { init(SecretKeySpec(publicKey.toByteArray(), HMacSHA256)) }
-        .doFinal(secretContent.lowercase().toByteArray())
-        .joinToString(separator = Blank, transform = ::asHexString)
+        .apply { init(SecretKeySpec(PicApiPublicKey.toByteArray(), HMacSHA256)) }
+        .doFinal(
+            (requestMethod.path + time + nonce + requestMethod.method + PicaApiKey)
+                .lowercase()
+                .toByteArray()
+        )
+        .joinToString(separator = Blank, transform = ::toHexString)
 }
 
 private const val BytesHex = "%02x"
-private fun asHexString(byte: Byte): String {
-    return String.format(BytesHex, byte)
-}
+private fun toHexString(byte: Byte): String =
+    String.format(BytesHex, byte)
