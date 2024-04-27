@@ -24,9 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
 import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.ui.icon.round.Done
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInInputFields
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInState
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInUiState
+import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInFields
+import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInState
 import me.ks.chan.pica.plus.ui.theme.Icon_24
 import me.ks.chan.pica.plus.util.compose.FillSpace
 import me.ks.chan.pica.plus.util.kotlinx.coroutine.defaultJob
@@ -36,9 +35,9 @@ private const val ButtonColorChangeAnimation = "ButtonColorChange"
 
 @Composable
 fun SignInButtons(
-    uiState: SignInUiState,
+    state: SignInState,
     startSignIn: () -> Unit,
-    inputFields: SignInInputFields,
+    inputFields: SignInFields,
     onForgotPassword: () -> Unit,
     onCreateAccount: () -> Unit,
 ) {
@@ -63,7 +62,7 @@ fun SignInButtons(
         val signInButtonContainerColors = animateColorAsState(
             targetValue = ButtonDefaults.buttonColors().run {
                 when {
-                    inputFields.username.isBlank() || inputFields.password.isBlank() || uiState.isLoading -> {
+                    inputFields.username.isBlank() || inputFields.password.isBlank() || state.isLoading -> {
                         disabledContainerColor
                     }
                     else -> { containerColor }
@@ -76,8 +75,8 @@ fun SignInButtons(
             enabled = (
                 inputFields.username.isNotBlank() &&
                     inputFields.password.isNotBlank() &&
-                    !uiState.isLoading &&
-                    !uiState.isSuccess
+                    !state.isLoading &&
+                    !state.isSuccess
                 ),
             colors = ButtonDefaults.buttonColors()
                 .copy(
@@ -87,10 +86,10 @@ fun SignInButtons(
             onClick = startSignIn,
         ) {
             AnimatedContent(
-                targetState = uiState.signInState,
+                targetState = state,
                 label = ButtonLoadingAnimation
-            ) { signInState ->
-                when (signInState) {
+            ) { state ->
+                when (state) {
                     SignInState.Loading -> {
                         CircularProgressIndicator(modifier = Modifier.size(Icon_24))
                     }
@@ -114,24 +113,24 @@ fun SignInButtons(
 @Preview
 @Composable
 private fun Preview() {
-    var uiState by remember { mutableStateOf(SignInUiState()) }
-    var inputFields by remember { mutableStateOf(SignInInputFields()) }
+    var state by remember { mutableStateOf<SignInState>(SignInState.Pending) }
+    var fields by remember { mutableStateOf(SignInFields()) }
 
     val coroutineScope = rememberCoroutineScope()
 
     Column {
         SignInButtons(
-            uiState = uiState,
+            state = state,
             startSignIn = {
                 coroutineScope.defaultJob {
-                    inputFields = SignInInputFields("username", "password")
+                    fields = SignInFields("username", "password")
                     delay(1000)
-                    uiState = SignInUiState(signInState = SignInState.Loading)
+                    state = SignInState.Loading
                     delay(2000)
-                    SignInUiState(signInState = SignInState.Success(""))
+                    state = SignInState.Success("")
                 }
             },
-            inputFields = inputFields,
+            inputFields = fields,
             onForgotPassword = {},
             onCreateAccount = {},
         )

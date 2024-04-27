@@ -27,18 +27,17 @@ import kotlinx.coroutines.delay
 import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.ui.icon.round.Visibility
 import me.ks.chan.pica.plus.ui.icon.round.VisibilityOff
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInInputFields
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInState
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInUiState
+import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInFields
+import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInState
 import me.ks.chan.pica.plus.ui.theme.Spacing_8
 import me.ks.chan.pica.plus.util.compose.FalseState
 import me.ks.chan.pica.plus.util.kotlinx.coroutine.defaultJob
 
 @Composable
-fun SignInFields(
-    uiState: SignInUiState,
+fun SignInTextFields(
+    state: SignInState,
     startSignIn: () -> Unit,
-    inputFields: SignInInputFields,
+    inputFields: SignInFields,
     updateUsernameField: (String) -> Unit,
     updatePasswordField: (String) -> Unit,
 ) {
@@ -51,8 +50,8 @@ fun SignInFields(
             .padding(top = Spacing_8),
         value = inputFields.username,
         onValueChange = updateUsernameField,
-        enabled = uiState.editable,
-        isError = uiState.signInState == SignInState.InvalidCredentialError,
+        enabled = state.editable,
+        isError = state is SignInState.Error.InvalidCredential,
         label = {
             Text(text = stringResource(id = R.string.screen_sign_in_field_username_label))
         },
@@ -73,8 +72,8 @@ fun SignInFields(
             .padding(top = Spacing_8),
         value = inputFields.password,
         onValueChange = updatePasswordField,
-        enabled = uiState.editable,
-        isError = uiState.signInState == SignInState.InvalidCredentialError,
+        enabled = state.editable,
+        isError = state is SignInState.Error.InvalidCredential,
         label = {
             Text(text = stringResource(id = R.string.screen_sign_in_field_password_label))
         },
@@ -86,8 +85,8 @@ fun SignInFields(
         supportingText = {
             Text(
                 text = stringResource(
-                    id = when (uiState.signInState) {
-                        SignInState.InvalidCredentialError -> {
+                    id = when (state) {
+                        SignInState.Error.InvalidCredential -> {
                             R.string.screen_sign_in_field_password_error
                         }
                         else -> {
@@ -118,21 +117,21 @@ fun SignInFields(
 @Preview
 @Composable
 private fun Preview() {
-    var uiState by remember { mutableStateOf(SignInUiState()) }
-    var inputFields by remember { mutableStateOf(SignInInputFields()) }
+    var state by remember { mutableStateOf<SignInState>(SignInState.Pending) }
+    var inputFields by remember { mutableStateOf(SignInFields()) }
 
     val coroutineScope = rememberCoroutineScope()
     Column {
-        SignInFields(
-            uiState = uiState,
+        SignInTextFields(
+            state = state,
             startSignIn = {
                 coroutineScope.defaultJob {
                     if (inputFields.username.isNotBlank() && inputFields.password.isNotBlank()) {
-                        uiState = SignInUiState(signInState = SignInState.Loading)
+                        state = SignInState.Loading
                         delay(2000)
-                        uiState = SignInUiState(signInState = SignInState.InvalidCredentialError)
+                        state = SignInState.Error.InvalidCredential
                         delay(2000)
-                        uiState = SignInUiState(signInState = SignInState.Pending)
+                        state = SignInState.Pending
                     }
                 }
             },

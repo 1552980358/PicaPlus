@@ -30,10 +30,9 @@ import me.ks.chan.pica.plus.storage.protobuf.AccountStore
 import me.ks.chan.pica.plus.storage.protobuf.AddressProto.Account
 import me.ks.chan.pica.plus.ui.screen.sign_in.composable.SignInButtons
 import me.ks.chan.pica.plus.ui.screen.sign_in.composable.SignInErrorDialog
-import me.ks.chan.pica.plus.ui.screen.sign_in.composable.SignInFields
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInInputFields
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInState
-import me.ks.chan.pica.plus.ui.screen.sign_in.model.SignInUiState
+import me.ks.chan.pica.plus.ui.screen.sign_in.composable.SignInTextFields
+import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInFields
+import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInState
 import me.ks.chan.pica.plus.ui.theme.Spacing_16
 import me.ks.chan.pica.plus.ui.theme.Spacing_8
 import me.ks.chan.pica.plus.util.compose.QuarterSize
@@ -46,54 +45,52 @@ fun SignInScreen(
     onCreateAccount: () -> Unit,
 ) {
     val viewModel = signInViewModel
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val fields by viewModel.inputFields.collectAsStateWithLifecycle()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val fields by viewModel.fields.collectAsStateWithLifecycle()
 
     SignInContent(
-        uiState,
-        viewModel::startSignIn,
-        fields,
-        viewModel::updateUsernameField,
-        viewModel::updatePasswordField,
-        onSignInSuccess,
-        onForgotPassword,
-        onCreateAccount,
+        state = state,
+        startSignIn = viewModel::signInAccount,
+        fields = fields,
+        updateFields = viewModel::updateFields,
+        onSignInSuccess = onSignInSuccess,
+        onForgotPassword = onForgotPassword,
+        onCreateAccount = onCreateAccount,
     )
 }
 
 @Composable
 private fun SignInContent(
-    uiState: SignInUiState,
+    state: SignInState,
     startSignIn: () -> Unit,
-    inputFields: SignInInputFields,
-    updateUsernameField: (String) -> Unit,
-    updatePasswordField: (String) -> Unit,
+    fields: SignInFields,
+    updateFields: (SignInFields) -> Unit,
     onSignInSuccess: () -> Unit,
     onForgotPassword: () -> Unit,
     onCreateAccount: () -> Unit,
 ) {
     val context = LocalContext.current
-    LaunchedEffect(key1 = uiState.signInState) {
-        if (uiState.signInState is SignInState.Success) {
+    LaunchedEffect(key1 = state) {
+        if (state is SignInState.Success) {
             // Store data
             context.AccountStore
                 .updateData {
                     Account.newBuilder()
-                        .setUsername(inputFields.username)
-                        .setPassword(inputFields.password)
-                        .setToken(uiState.signInState.token)
+                        .setUsername(fields.username)
+                        .setPassword(fields.password)
+                        .setToken(state.token)
                         .build()
                 }
             // Save token to repository holder
-            PicaRepository.authorization(token = uiState.signInState.token)
+            PicaRepository.authorization(token = state.token)
 
             // Complete
             onSignInSuccess()
         }
     }
 
-    if (uiState.signInState is SignInState.DialogError) {
-        SignInErrorDialog(errorTextResId = uiState.signInState.stringResId)
+    if (state is SignInState.Error.Dialog) {
+        SignInErrorDialog(errorTextResId = state.stringResId)
     }
 
     Column(
@@ -124,18 +121,22 @@ private fun SignInContent(
                     style = MaterialTheme.typography.headlineMedium
                 )
 
-                SignInFields(
-                    uiState = uiState,
+                SignInTextFields(
+                    state = state,
                     startSignIn = startSignIn,
-                    inputFields = inputFields,
-                    updateUsernameField = updateUsernameField,
-                    updatePasswordField = updatePasswordField,
+                    inputFields = fields,
+                    updateUsernameField = { username ->
+                        updateFields(fields.copy(username = username))
+                    },
+                    updatePasswordField = { password ->
+                        updateFields(fields.copy(password = password))
+                    },
                 )
 
                 SignInButtons(
-                    uiState = uiState,
+                    state = state,
                     startSignIn = startSignIn,
-                    inputFields = inputFields,
+                    inputFields = fields,
                     onForgotPassword = onForgotPassword,
                     onCreateAccount = onCreateAccount,
                 )
@@ -153,38 +154,29 @@ fun SignInPreview(
     onForgotPassword: () -> Unit = {},
     onCreateAccount: () -> Unit = {},
 ) {
-    var uiState by remember { mutableStateOf(SignInUiState()) }
-    var inputFields by remember { mutableStateOf(SignInInputFields()) }
+    var state by remember { mutableStateOf<SignInState>(SignInState.Pending) }
+    var inputFields by remember { mutableStateOf(SignInFields()) }
 
     val coroutineScope = rememberCoroutineScope()
 
     SignInContent(
-        uiState = uiState,
-        inputFields = inputFields,
+        state = state,
+        fields = inputFields,
         startSignIn = {
             if (inputFields.username.isNotBlank() && inputFields.password.isNotBlank()) {
-                uiState = uiState.copy(signInState = SignInState.Loading)
+                state = SignInState.Loading
                 coroutineScope.defaultJob {
                     delay(2000)
-                    uiState = uiState.copy(
-                        signInState = SignInState.InvalidCredentialError,
-                    )
+                    state = SignInState.Error.InvalidCredential
                     delay(2000)
-                    uiState = uiState.copy(
-                        signInState = SignInState.UnexpectedExceptionError,
-                    )
+                    state = SignInState.Error.UnknownException
                     delay(2000)
-                    uiState = uiState.copy(
-                        signInState = SignInState.Success(""),
-                    )
+                    state = SignInState.Success("")
                 }
             }
         },
-        updateUsernameField = { username ->
-            inputFields = inputFields.copy(username = username)
-        },
-        updatePasswordField = { password ->
-            inputFields = inputFields.copy(password = password)
+        updateFields = { fields ->
+            inputFields = fields
         },
         onSignInSuccess = onSignInSuccess,
         onForgotPassword = onForgotPassword,

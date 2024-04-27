@@ -16,7 +16,7 @@
     <string name="screen_sign_in_dialog_text_title">Error occurs</string>
     <string name="screen_sign_in_dialog_text_error_connection">Connection error.</string>
     <string name="screen_sign_in_dialog_text_error_invalid_response">Invalid response error.</string>
-    <string name="screen_sign_in_dialog_text_error_unexpected_exception">Unexpected exception occurs.</string>
+    <string name="screen_sign_in_dialog_text_error_unknown">Unknown error occurs.</string>
 
     <string name="screen_greeting_text_state_loading">Loading account metadata…</string>
     <string name="screen_greeting_text_state_success">Welcome back</string>

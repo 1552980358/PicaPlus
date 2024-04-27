@@ -6,20 +6,20 @@ sealed class PicaSignInRepositoryResult {
 
     data class Success(val token: String): PicaSignInRepositoryResult()
 
-    data class Error(val errorType: ErrorType): PicaSignInRepositoryResult() {
-        constructor(errorCode: String?): this(ErrorType.fromErrorCode(errorCode))
-    }
+    data class Error(val type: Type): PicaSignInRepositoryResult() {
+        constructor(errorCode: String?): this(Type.fromErrorCode(errorCode))
 
-    enum class ErrorType(val errorCode: String?) {
-        EmptyBody(null),
-        InvalidCredential("1002");
+        enum class Type(val errorCode: String?) {
+            EmptyBody(null),
+            InvalidCredential("1002");
 
-        companion object {
-            fun fromErrorCode(errorCode: String?): ErrorType {
-                return when (errorCode) {
-                    EmptyBody.errorCode -> EmptyBody
-                    InvalidCredential.errorCode -> InvalidCredential
-                    else -> throw IllegalArgumentException()
+            companion object {
+                fun fromErrorCode(errorCode: String?): Type {
+                    return when (errorCode) {
+                        EmptyBody.errorCode -> EmptyBody
+                        InvalidCredential.errorCode -> InvalidCredential
+                        else -> throw IllegalArgumentException()
+                    }
                 }
             }
         }
