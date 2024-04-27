@@ -1,0 +1,92 @@
+package me.ks.chan.pica.plus.ui.icon.round
+
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import me.ks.chan.pica.plus.ui.icon.materialSymbol
+
+private const val Name = "Person"
+private const val ViewPortSize = 960F
+val Person by lazy {
+    materialSymbol(Name, ViewPortSize) {
+        moveTo(480F, 480F)
+        quadTo(414F, 480F, 367F, 433F)
+        quadTo(320F, 386F, 320F, 320F)
+        quadTo(320F, 254F, 367F, 207F)
+        quadTo(414F, 160F, 480F, 160F)
+        quadTo(546F, 160F, 593F, 207F)
+        quadTo(640F, 254F, 640F, 320F)
+        quadTo(640F, 386F, 593F, 433F)
+        quadTo(546F, 480F, 480F, 480F)
+        close()
+        moveTo(160F, 720F)
+        lineTo(160F, 688F)
+        quadTo(160F, 654F, 177.5F, 625.5F)
+        quadTo(195F, 597F, 224F, 582F)
+        quadTo(286F, 551F, 350F, 535.5F)
+        quadTo(414F, 520F, 480F, 520F)
+        quadTo(546F, 520F, 610F, 535.5F)
+        quadTo(674F, 551F, 736F, 582F)
+        quadTo(765F, 597F, 782.5F, 625.5F)
+        quadTo(800F, 654F, 800F, 688F)
+        lineTo(800F, 720F)
+        quadTo(800F, 753F, 776.5F, 776.5F)
+        quadTo(753F, 800F, 720F, 800F)
+        lineTo(240F, 800F)
+        quadTo(207F, 800F, 183.5F, 776.5F)
+        quadTo(160F, 753F, 160F, 720F)
+        close()
+        moveTo(240F, 720F)
+        lineTo(720F, 720F)
+        lineTo(720F, 688F)
+        quadTo(720F, 677F, 714.5F, 668F)
+        quadTo(709F, 659F, 700F, 654F)
+        quadTo(646F, 627F, 591F, 613.5F)
+        quadTo(536F, 600F, 480F, 600F)
+        quadTo(424F, 600F, 369F, 613.5F)
+        quadTo(314F, 627F, 260F, 654F)
+        quadTo(251F, 659F, 245.5F, 668F)
+        quadTo(240F, 677F, 240F, 688F)
+        lineTo(240F, 720F)
+        close()
+        moveTo(480F, 400F)
+        quadTo(513F, 400F, 536.5F, 376.5F)
+        quadTo(560F, 353F, 560F, 320F)
+        quadTo(560F, 287F, 536.5F, 263.5F)
+        quadTo(513F, 240F, 480F, 240F)
+        quadTo(447F, 240F, 423.5F, 263.5F)
+        quadTo(400F, 287F, 400F, 320F)
+        quadTo(400F, 353F, 423.5F, 376.5F)
+        quadTo(447F, 400F, 480F, 400F)
+        close()
+        moveTo(480F, 320F)
+        quadTo(480F, 320F, 480F, 320F)
+        quadTo(480F, 320F, 480F, 320F)
+        quadTo(480F, 320F, 480F, 320F)
+        quadTo(480F, 320F, 480F, 320F)
+        quadTo(480F, 320F, 480F, 320F)
+        quadTo(480F, 320F, 480F, 320F)
+        quadTo(480F, 320F, 480F, 320F)
+        quadTo(480F, 320F, 480F, 320F)
+        close()
+        moveTo(480F, 720F)
+        lineTo(480F, 720F)
+        quadTo(480F, 720F, 480F, 720F)
+        quadTo(480F, 720F, 480F, 720F)
+        quadTo(480F, 720F, 480F, 720F)
+        quadTo(480F, 720F, 480F, 720F)
+        quadTo(480F, 720F, 480F, 720F)
+        quadTo(480F, 720F, 480F, 720F)
+        quadTo(480F, 720F, 480F, 720F)
+        quadTo(480F, 720F, 480F, 720F)
+        lineTo(480F, 720F)
+        lineTo(480F, 720F)
+        close()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Person() {
+    Icon(imageVector = Person, contentDescription = Name)
+}

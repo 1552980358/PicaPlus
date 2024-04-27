@@ -1,0 +1,91 @@
+package me.ks.chan.pica.plus.ui.icon.round
+
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
+import me.ks.chan.pica.plus.ui.icon.materialSymbol
+
+private const val Name = "Key"
+private const val ViewPortSize = 960F
+val Key by lazy {
+    materialSymbol(Name, ViewPortSize) {
+        moveTo(280F, 560F)
+        quadTo(247F, 560F, 223.5F, 536.5F)
+        quadTo(200F, 513F, 200F, 480F)
+        quadTo(200F, 447F, 223.5F, 423.5F)
+        quadTo(247F, 400F, 280F, 400F)
+        quadTo(313F, 400F, 336.5F, 423.5F)
+        quadTo(360F, 447F, 360F, 480F)
+        quadTo(360F, 513F, 336.5F, 536.5F)
+        quadTo(313F, 560F, 280F, 560F)
+        close()
+        moveTo(280F, 720F)
+        quadTo(180F, 720F, 110F, 650F)
+        quadTo(40F, 580F, 40F, 480F)
+        quadTo(40F, 380F, 110F, 310F)
+        quadTo(180F, 240F, 280F, 240F)
+        quadTo(347F, 240F, 401.5F, 273F)
+        quadTo(456F, 306F, 488F, 360F)
+        lineTo(823F, 360F)
+        quadTo(831F, 360F, 838.5F, 363F)
+        quadTo(846F, 366F, 852F, 372F)
+        lineTo(932F, 452F)
+        quadTo(938F, 458F, 940.5F, 465F)
+        quadTo(943F, 472F, 943F, 480F)
+        quadTo(943F, 488F, 940.5F, 495F)
+        quadTo(938F, 502F, 932F, 508F)
+        lineTo(805F, 635F)
+        quadTo(800F, 640F, 793F, 643F)
+        quadTo(786F, 646F, 779F, 647F)
+        quadTo(772F, 648F, 765F, 646F)
+        quadTo(758F, 644F, 752F, 639F)
+        lineTo(700F, 600F)
+        lineTo(643F, 643F)
+        quadTo(638F, 647F, 632F, 649F)
+        quadTo(626F, 651F, 620F, 651F)
+        quadTo(614F, 651F, 607.5F, 649F)
+        quadTo(601F, 647F, 596F, 643F)
+        lineTo(535F, 600F)
+        lineTo(488F, 600F)
+        quadTo(456F, 654F, 401.5F, 687F)
+        quadTo(347F, 720F, 280F, 720F)
+        close()
+        moveTo(280F, 640F)
+        quadTo(336F, 640F, 378.5F, 606F)
+        quadTo(421F, 572F, 435F, 520F)
+        lineTo(560F, 520F)
+        lineTo(618F, 561F)
+        quadTo(618F, 561F, 618F, 561.5F)
+        quadTo(618F, 562F, 618F, 561F)
+        quadTo(618F, 561F, 618F, 561F)
+        quadTo(618F, 561F, 618F, 561F)
+        lineTo(700F, 500F)
+        lineTo(771F, 555F)
+        quadTo(771F, 555F, 771F, 555F)
+        quadTo(771F, 555F, 771F, 555F)
+        quadTo(771F, 555F, 771F, 555F)
+        quadTo(771F, 555F, 771F, 555F)
+        lineTo(846F, 480F)
+        quadTo(845F, 480F, 845.5F, 480F)
+        quadTo(846F, 480F, 846F, 480F)
+        quadTo(846F, 480F, 846F, 480F)
+        quadTo(846F, 480F, 846F, 480F)
+        lineTo(806F, 440F)
+        quadTo(806F, 439F, 806F, 439.5F)
+        quadTo(806F, 440F, 806F, 440F)
+        lineTo(435F, 440F)
+        quadTo(421F, 388F, 378.5F, 354F)
+        quadTo(336F, 320F, 280F, 320F)
+        quadTo(214F, 320F, 167F, 367F)
+        quadTo(120F, 414F, 120F, 480F)
+        quadTo(120F, 546F, 167F, 593F)
+        quadTo(214F, 640F, 280F, 640F)
+        close()
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Key() {
+    Icon(imageVector = Key, contentDescription = Name)
+}
