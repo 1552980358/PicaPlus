@@ -40,6 +40,14 @@ android {
     }
     kotlin {
         jvmToolchain(17)
+        kotlinOptions.freeCompilerArgs += listOf(
+            "-XXLanguage:+ExplicitBackingFields",
+        )
+        sourceSets.all {
+            languageSettings {
+                languageVersion = "2.0"
+            }
+        }
     }
     buildFeatures {
         compose = true
