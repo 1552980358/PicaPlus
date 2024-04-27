@@ -27,5 +27,28 @@
     <string name="screen_greeting_dialog_error_text_unauthorized">Unauthorized status code was received when requesting account Metadata.</string>
     <string name="screen_greeting_dialog_error_text_unknown">Unknown error was caught when requesting account Metadata.</string>
 
+    <string name="screen_register_top_bar_title">Register</string>
+    <string name="screen_register_field_username_label">Username</string>
+    <string name="screen_register_field_nickname_label">Nickname</string>
+    <string name="screen_register_field_password_label">Password</string>
+    <string name="screen_register_field_password_description_visible">Password visible</string>
+    <string name="screen_register_field_password_description_invisible">Password invisible</string>
+    <string name="screen_register_field_password_confirm_label">Password Confirm</string>
+    <string name="screen_register_field_password_confirm_description_visible">Password Confirm visible</string>
+    <string name="screen_register_field_password_confirm_description_invisible">Password Confirm invisible</string>
+    <string name="screen_register_field_gender_title">Gender</string>
+    <string name="screen_register_field_gender_gentleman_text">Gentleman</string>
+    <string name="screen_register_field_gender_gentleman_description">Gentleman selected</string>
+    <string name="screen_register_field_gender_lady_text">Lady</string>
+    <string name="screen_register_field_gender_lady_description">Lady selected</string>
+    <string name="screen_register_field_gender_bot_text">Bot</string>
+    <string name="screen_register_field_gender_bot_description">Bot selected</string>
+    <string name="screen_register_field_birthday_label">Birthday</string>
+    <string name="screen_register_fields_question_a_title">Security Question 1</string>
+    <string name="screen_register_fields_question_b_title">Security Question 2</string>
+    <string name="screen_register_fields_question_c_title">Security Question 2</string>
+    <string name="screen_register_field_question_label">Question</string>
+    <string name="screen_register_field_answer_label">Answer</string>
+    <string name="screen_register_button_submit">Submit</string>
 
 </resources>
