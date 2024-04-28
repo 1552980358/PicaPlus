@@ -1,9 +1,9 @@
 [versions]
 android-gradle-plugin = "8.3.2"
-androidx-compose-activity = "1.8.2"
-androidx-compose-bom = "2024.04.00"
-androidx-core-ktx = "1.12.0"
-androidx-datastore = "1.0.0"
+androidx-compose-activity = "1.9.0"
+androidx-compose-bom = "2024.04.01"
+androidx-core-ktx = "1.13.0"
+androidx-datastore = "1.1.0"
 androidx-espresso = "3.5.1"
 androidx-junit = "1.1.5"
 androidx-lifecycle = "2.7.0"
