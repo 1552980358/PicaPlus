@@ -1,4 +1,4 @@
-package me.ks.chan.pica.plus.ui.screen.greeting.model
+package me.ks.chan.pica.plus.ui.screen.greeting.viewmodel
 
 import androidx.annotation.StringRes
 import me.ks.chan.pica.plus.R
