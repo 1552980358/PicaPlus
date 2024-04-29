@@ -17,7 +17,7 @@ class PicaSignInRepositoryTest {
                         println("Token: ${picaSignInRepositoryResult.token}")
                     }
                     is PicaSignInRepositoryResult.Error -> {
-                        println("Error: ${picaSignInRepositoryResult.errorType}")
+                        println("Error: ${picaSignInRepositoryResult.type}")
                     }
                 }
             }
