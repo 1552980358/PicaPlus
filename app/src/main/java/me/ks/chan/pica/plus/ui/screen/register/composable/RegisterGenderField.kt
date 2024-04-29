@@ -61,7 +61,7 @@ fun RegisterGenderField(
                                 )
                             )
                         }
-                    }
+                    },
                 ) {
                     Text(text = stringResource(id = gender.labelResId))
                 }

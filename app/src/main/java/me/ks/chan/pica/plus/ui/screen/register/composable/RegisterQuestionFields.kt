@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +28,7 @@ fun RegisterQuestionFields(
     answer: String,
     onAnswerChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    onNext: KeyboardActionScope.() -> Unit = {},
 ) {
     Card(
         modifier = modifier
@@ -54,6 +56,7 @@ fun RegisterQuestionFields(
                         )
                     )
                 },
+                onNext = onNext,
             )
 
             RegisterTextField(
@@ -70,6 +73,7 @@ fun RegisterQuestionFields(
                         )
                     )
                 },
+                onNext = onNext,
             )
         }
     }

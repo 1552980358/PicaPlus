@@ -1,10 +1,15 @@
 package me.ks.chan.pica.plus.ui.screen.register
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -23,9 +28,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -88,6 +97,9 @@ private fun RegisterContent(
     }
 
     Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .imePadding(),
         topBar = {
             @OptIn(ExperimentalMaterial3Api::class)
             TopAppBar(
@@ -112,13 +124,15 @@ private fun RegisterContent(
             SnackbarHost(hostState = snackbarHostState)
         }
     ) { paddings ->
+        val focusManager = LocalFocusManager.current
+
         @OptIn(ExperimentalLayoutApi::class)
         LazyColumn(
             modifier = Modifier
-                .padding(paddings)
-                .padding(horizontal = Spacing_16)
-                .imePadding()
+                .fillMaxSize()
                 .imeNestedScroll()
+                .padding(horizontal = Spacing_16),
+            contentPadding = paddings,
         ) {
             item {
                 RegisterTextField(
@@ -136,6 +150,9 @@ private fun RegisterContent(
                                 id = R.string.screen_register_field_username_label
                             )
                         )
+                    },
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
                     }
                 )
             }
@@ -157,6 +174,9 @@ private fun RegisterContent(
                             )
                         )
                     },
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    }
                 )
             }
 
@@ -170,7 +190,10 @@ private fun RegisterContent(
                     labelResId = R.string.screen_register_field_password_label,
                     contentVisibleDescriptionResId = R.string.screen_register_field_password_description_visible,
                     contentInvisibleDescriptionResId = R.string.screen_register_field_password_description_invisible,
-                    enabled = state.editable
+                    enabled = state.editable,
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    }
                 )
             }
 
@@ -184,7 +207,10 @@ private fun RegisterContent(
                     labelResId = R.string.screen_register_field_password_confirm_label,
                     contentVisibleDescriptionResId = R.string.screen_register_field_password_confirm_description_visible,
                     contentInvisibleDescriptionResId = R.string.screen_register_field_password_confirm_description_invisible,
-                    enabled = state.editable
+                    enabled = state.editable,
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    },
                 )
             }
 
@@ -205,7 +231,10 @@ private fun RegisterContent(
                     birthdayMillisField = fields.birthdayMillis,
                     updateBirthdayMillis = {
                         updateFields(fields.copy(birthdayMillis = it))
-                    }
+                    },
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    },
                 )
             }
 
@@ -221,6 +250,9 @@ private fun RegisterContent(
                     answer = fields.answerA,
                     onAnswerChange = {
                         updateFields(fields.copy(answerA = it))
+                    },
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
                     },
                 )
             }
@@ -238,6 +270,9 @@ private fun RegisterContent(
                     onAnswerChange = {
                         updateFields(fields.copy(answerB = it))
                     },
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    },
                 )
             }
 
@@ -254,6 +289,9 @@ private fun RegisterContent(
                     onAnswerChange = {
                         updateFields(fields.copy(answerC = it))
                     },
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Down)
+                    },
                 )
             }
 
@@ -265,7 +303,7 @@ private fun RegisterContent(
                     startRegister = startRegister,
                     fields = fields,
                     state = state,
-                    updateState = updateState
+                    updateState = updateState,
                 )
             }
         }

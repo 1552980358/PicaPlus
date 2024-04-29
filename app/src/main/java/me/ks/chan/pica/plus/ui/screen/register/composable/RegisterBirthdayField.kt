@@ -4,6 +4,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,6 +37,7 @@ fun RegisterBirthdayField(
     state: RegisterState,
     birthdayMillisField: Long?,
     updateBirthdayMillis: (Long) -> Unit,
+    onNext: KeyboardActionScope.() -> Unit = {},
 ) {
     var pickDate by remember(::FalseState)
 
@@ -70,6 +72,7 @@ fun RegisterBirthdayField(
             )
         },
         interactionSource = interactionSource,
+        onNext = onNext,
         readOnly = true,
     )
 }

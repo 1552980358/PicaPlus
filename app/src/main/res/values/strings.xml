@@ -47,7 +47,7 @@
     <string name="screen_register_field_birthday_label">Birthday</string>
     <string name="screen_register_fields_question_a_title">Security Question 1</string>
     <string name="screen_register_fields_question_b_title">Security Question 2</string>
-    <string name="screen_register_fields_question_c_title">Security Question 2</string>
+    <string name="screen_register_fields_question_c_title">Security Question 3</string>
     <string name="screen_register_field_question_label">Question</string>
     <string name="screen_register_field_answer_label">Answer</string>
     <string name="screen_register_button_submit">Submit</string>

@@ -2,6 +2,7 @@ package me.ks.chan.pica.plus.ui.screen.register.composable
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -26,7 +27,10 @@ fun RegisterPasswordField(
     @StringRes contentInvisibleDescriptionResId: Int,
     enabled: Boolean,
     modifier: Modifier = Modifier,
+    onNext: KeyboardActionScope.() -> Unit = {},
 ) {
+    var visibility by remember(::FalseState)
+
     RegisterTextField(
         modifier = modifier,
         value = value,
@@ -39,8 +43,8 @@ fun RegisterPasswordField(
                 contentDescription = stringResource(id = labelResId)
             )
         },
+        onNext = onNext,
         trailingIcon = {
-            var visibility by remember(::FalseState)
             IconButton(onClick = { visibility = !visibility }) {
                 Crossfade(
                     targetState = visibility,
