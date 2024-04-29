@@ -2,6 +2,7 @@
     <string name="app_name">PicaPlus</string>
 
     <string name="action_cancel">@android:string/cancel</string>
+    <string name="action_back">Back</string>
     <string name="action_ok">@android:string/ok</string>
     <string name="action_retry">Retry</string>
 

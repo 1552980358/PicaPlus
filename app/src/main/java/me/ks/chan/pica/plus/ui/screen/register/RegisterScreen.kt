@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -16,12 +17,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.CoroutineScope
 import me.ks.chan.pica.plus.R
+import me.ks.chan.pica.plus.ui.icon.round.ArrowBack
 import me.ks.chan.pica.plus.ui.icon.round.Person
 import me.ks.chan.pica.plus.ui.icon.round.WavingHand
 import me.ks.chan.pica.plus.ui.screen.register.composable.RegisterBirthdayField
@@ -37,6 +41,7 @@ import me.ks.chan.pica.plus.ui.theme.Spacing_8
 
 @Composable
 fun RegisterScreen(
+    onExit: () -> Unit,
     viewModel: RegisterViewModel = registerViewModel
 ) {
     val fields by viewModel.fields.collectAsStateWithLifecycle()
@@ -48,6 +53,7 @@ fun RegisterScreen(
         fields = fields,
         updateFields = viewModel::updateFields,
         startRegister = viewModel::registerAccount,
+        onExit = onExit,
     )
 }
 
@@ -58,6 +64,7 @@ private fun RegisterContent(
     fields: RegisterFields,
     updateFields: (RegisterFields) -> Unit,
     startRegister: () -> Unit,
+    onExit: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -69,6 +76,14 @@ private fun RegisterContent(
                             id = R.string.screen_register_top_bar_title
                         )
                     )
+                },
+                navigationIcon = {
+                    IconButton(onClick = onExit) {
+                        Icon(
+                            imageVector = ArrowBack,
+                            contentDescription = stringResource(id = R.string.action_back)
+                        )
+                    }
                 }
             )
         }
@@ -235,7 +250,10 @@ private fun RegisterContent(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun RegisterPreview() {
+fun RegisterPreview(
+    onExit: () -> Unit = {},
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
+) {
     var state by remember { mutableStateOf<RegisterState>(RegisterState.Pending) }
     var fields by remember { mutableStateOf(RegisterFields()) }
     Surface {
@@ -250,6 +268,8 @@ fun RegisterPreview() {
             },
             startRegister = {
             }
+            },
+            onExit = onExit,
         )
     }
 }
