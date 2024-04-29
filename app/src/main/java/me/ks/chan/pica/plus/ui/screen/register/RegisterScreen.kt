@@ -179,7 +179,7 @@ private fun RegisterContent(
                     modifier = Modifier.fillMaxWidth(),
                     value = fields.passwordConfirm,
                     onValueChange = {
-                        updateFields(fields.copy(password = it))
+                        updateFields(fields.copy(passwordConfirm = it))
                     },
                     labelResId = R.string.screen_register_field_password_confirm_label,
                     contentVisibleDescriptionResId = R.string.screen_register_field_password_confirm_description_visible,
