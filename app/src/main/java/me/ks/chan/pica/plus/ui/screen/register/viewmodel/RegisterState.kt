@@ -1,5 +1,8 @@
 package me.ks.chan.pica.plus.ui.screen.register.viewmodel
 
+import androidx.annotation.StringRes
+import me.ks.chan.pica.plus.R
+
 sealed interface RegisterState {
 
     val editable: Boolean
@@ -17,17 +20,37 @@ sealed interface RegisterState {
             get() = false
     }
 
-    data object Success: RegisterState
+    sealed interface Result: RegisterState {
+        @get:StringRes
+        val snackTextResId: Int
+    }
 
-    sealed interface Error: RegisterState {
+    data object Success: Result {
+        override val snackTextResId: Int
+            get() = R.string.screen_register_snackbar_success
+    }
 
-        data object Network: Error
+    sealed interface Error: Result {
 
-        data object DuplicateUsername: Error
+        data object Network: Error {
+            override val snackTextResId: Int
+                get() = R.string.screen_register_snackbar_error_network
+        }
 
-        data object UnknownResponse: Error
+        data object DuplicateUsername: Error {
+            override val snackTextResId: Int
+                get() = R.string.screen_register_snackbar_error_duplicated
+        }
 
-        data object Unknown: Error
+        data object UnknownResponse: Error {
+            override val snackTextResId: Int
+                get() = R.string.screen_register_snackbar_error_unknown_response
+        }
+
+        data object Unknown: Error {
+            override val snackTextResId: Int
+                get() = R.string.screen_register_snackbar_error_unknown
+        }
 
     }
 

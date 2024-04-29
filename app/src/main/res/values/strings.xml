@@ -51,5 +51,10 @@
     <string name="screen_register_field_question_label">Question</string>
     <string name="screen_register_field_answer_label">Answer</string>
     <string name="screen_register_button_submit">Submit</string>
+    <string name="screen_register_snackbar_success">Register succeed</string>
+    <string name="screen_register_snackbar_error_network">Connection error occurs</string>
+    <string name="screen_register_snackbar_error_duplicated">Duplicated username input</string>
+    <string name="screen_register_snackbar_error_unknown_response">Unknown server response content</string>
+    <string name="screen_register_snackbar_error_unknown">Unknown error occurs</string>
 
 </resources>
