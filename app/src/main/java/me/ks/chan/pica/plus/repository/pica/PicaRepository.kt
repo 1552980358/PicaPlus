@@ -125,7 +125,7 @@ private suspend fun buildRequestBody(
 ): RequestBody? = defaultBlocking {
     when (requestMethod) {
         is RequestMethod.Post -> {
-            requestMethod.method
+            requestMethod.content
                 .toRequestBody(ContentTypeJson.toMediaType())
         }
         else -> { null }
