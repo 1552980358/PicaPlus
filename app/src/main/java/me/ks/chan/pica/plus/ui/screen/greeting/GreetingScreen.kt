@@ -31,12 +31,16 @@ import me.ks.chan.pica.plus.util.kotlin.Blank
 
 @Composable
 fun GreetingScreen(
-    viewModel: GreetingViewModel = greetingViewModel
+    onSuccess: () -> Unit,
+    onError: () -> Unit,
+    viewModel: GreetingViewModel = greetingViewModel,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     GreetingContent(
-        state = state
+        state = state,
+        onSuccess = onSuccess,
+        onError = onError,
     )
 }
 
@@ -45,8 +49,15 @@ private const val NicknameCrossFade = "Nickname"
 @Composable
 private fun GreetingContent(
     state: GreetingState,
+    onSuccess: () -> Unit,
+    onError: () -> Unit,
 ) {
     LaunchedEffect(key1 = state) {
+        when (state) {
+            is GreetingState.Success -> { onSuccess() }
+            is GreetingState.Error -> { onError() }
+            else -> { /** NOTHING TO DO **/ }
+        }
     }
 
     Column {
@@ -130,22 +141,17 @@ private fun GreetingContent(
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun GreetingPreview(
+    onSuccess: () -> Unit = {},
+    onError: () -> Unit = {},
+) {
     val state by flow {
         while (true) {
-            delay(2000)
-            emit(GreetingState.Loading)
-            delay(2000)
+            delay(3000)
             emit(
                 GreetingState.Success(
                     nickname = "ks.chan",
                     avatar = "https://avatars.githubusercontent.com/1552980358",
-                )
-            )
-            delay(5000)
-            emit(
-                GreetingState.Error(
-                    type = GreetingState.Error.Type.Connection
                 )
             )
         }
@@ -153,5 +159,7 @@ fun GreetingPreview() {
 
     GreetingContent(
         state = state,
+        onSuccess = onSuccess,
+        onError = onError,
     )
 }
