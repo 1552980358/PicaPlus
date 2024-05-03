@@ -18,27 +18,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.ui.theme.Corner_12
 
 private const val Shimmer = "Shimmer"
-private const val AnimationDuration = 1000
+private const val Duration = 1000
 
 fun Modifier.shimmer(
-    loading: Boolean,
+    loading: Boolean = true,
     paddings: PaddingValues = PaddingValues(),
     initialColor: Color? = null,
     targetColor: Color? = null,
@@ -46,14 +41,14 @@ fun Modifier.shimmer(
     roundedCornerShape: RoundedCornerShape = RoundedCornerShape(
         size = cornerRadius
     ),
-    animationDuration: Int = AnimationDuration,
+    durationMillis: Int = Duration,
 ) = when {
     loading -> shimmerLoading(
         paddings,
         initialColor,
         targetColor,
         roundedCornerShape,
-        animationDuration
+        durationMillis,
     )
     else -> this
 }
@@ -63,19 +58,18 @@ private fun Modifier.shimmerLoading(
     initialColor: Color?,
     targetColor: Color?,
     roundedCornerShape: RoundedCornerShape,
-    animationDuration: Int,
+    durationMillis: Int,
 ) = composed {
     val initial = initialColor ?:  MaterialTheme.colorScheme.primaryContainer
     val target = targetColor ?: MaterialTheme.colorScheme.surfaceContainer
 
-    var composableSize by remember { mutableStateOf(IntSize.Zero) }
     val transition = rememberInfiniteTransition(label = Shimmer)
     val transitionColor by transition.animateColor(
         initialValue = initial,
         targetValue = target,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = animationDuration,
+                durationMillis = durationMillis,
             ),
             repeatMode = RepeatMode.Reverse,
         ),
@@ -83,7 +77,6 @@ private fun Modifier.shimmerLoading(
     )
 
     padding(paddingValues = paddings)
-        .onGloballyPositioned { composableSize = it.size }
         .background(
             color = transitionColor,
             shape = roundedCornerShape,
@@ -121,7 +114,9 @@ private fun ShimmerPreview() {
         ListItem(
             headlineContent = {
                 Text(
-                    modifier = Modifier.fillMaxWidth().shimmer(loading = true),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .shimmer(loading = true),
                     text = "ItemTitle"
                 )
             },
