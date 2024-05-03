@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.flow
 import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.ui.composable.shimmer.shimmer
 import me.ks.chan.pica.plus.ui.screen.greeting.composable.GreetingAsyncAvatar
+import me.ks.chan.pica.plus.ui.screen.greeting.composable.GreetingErrorDialog
 import me.ks.chan.pica.plus.ui.screen.greeting.viewmodel.GreetingState
 import me.ks.chan.pica.plus.ui.theme.Avatar_48
 import me.ks.chan.pica.plus.ui.theme.Spacing_8
@@ -39,6 +40,7 @@ fun GreetingScreen(
 
     GreetingContent(
         state = state,
+        updateProfile = viewModel::updateProfile,
         onSuccess = onSuccess,
         onError = onError,
     )
@@ -51,18 +53,23 @@ private const val SuccessDelay = 2500L
 @Composable
 private fun GreetingContent(
     state: GreetingState,
+    updateProfile: () -> Unit,
     onSuccess: () -> Unit,
     onError: () -> Unit,
 ) {
     LaunchedEffect(key1 = state) {
-        when (state) {
-            is GreetingState.Success -> {
-                delay(SuccessDelay)
-                onSuccess()
-            }
-            is GreetingState.Error -> { onError() }
-            else -> { /** NOTHING TO DO **/ }
+        if (state is GreetingState.Success) {
+            delay(SuccessDelay)
+            onSuccess()
         }
+    }
+
+    if (state is GreetingState.Error) {
+        GreetingErrorDialog(
+            state = state,
+            onCancel = onError,
+            onRetry = updateProfile,
+        )
     }
 
     Column {

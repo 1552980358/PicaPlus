@@ -20,13 +20,17 @@ class GreetingViewModel: ViewModel() {
         field = MutableStateFlow<GreetingState>(GreetingState.Loading)
 
     init {
-        viewModelScope.defaultJob {
-            GreetingRepository.collect(::updateState)
-        }
+        updateProfile()
     }
 
     private fun updateState(state: GreetingState) {
         this.state.value = state
+    }
+
+    fun updateProfile() {
+        viewModelScope.defaultJob {
+            GreetingRepository.collect(::updateState)
+        }
     }
 
 }
