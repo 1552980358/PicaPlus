@@ -37,7 +37,7 @@ fun GreetingAsyncAvatar(
 }
 
 @Composable
-fun AsyncAvatar(
+private fun AsyncAvatar(
     avatar: String,
     setError: (Boolean) -> Unit,
 ) {

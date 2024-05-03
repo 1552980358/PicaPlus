@@ -46,6 +46,8 @@ fun GreetingScreen(
 
 private const val StateCrossFade = "State"
 private const val NicknameCrossFade = "Nickname"
+private const val SuccessDelay = 2500L
+
 @Composable
 private fun GreetingContent(
     state: GreetingState,
@@ -54,7 +56,10 @@ private fun GreetingContent(
 ) {
     LaunchedEffect(key1 = state) {
         when (state) {
-            is GreetingState.Success -> { onSuccess() }
+            is GreetingState.Success -> {
+                delay(SuccessDelay)
+                onSuccess()
+            }
             is GreetingState.Error -> { onError() }
             else -> { /** NOTHING TO DO **/ }
         }
