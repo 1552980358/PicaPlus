@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.ui.activity.main.viewmodel.MainState
@@ -23,6 +24,9 @@ import me.ks.chan.pica.plus.ui.nav.Greeting
 import me.ks.chan.pica.plus.ui.nav.Guest
 import me.ks.chan.pica.plus.ui.nav.guestNav
 import me.ks.chan.pica.plus.ui.nav.guestNavPreview
+import me.ks.chan.pica.plus.ui.screen.main.Main
+import me.ks.chan.pica.plus.ui.screen.main.MainPreview
+import me.ks.chan.pica.plus.ui.screen.main.MainScreen
 import me.ks.chan.pica.plus.ui.theme.PicaPlusTheme
 
 class MainActivity : ComponentActivity() {
@@ -71,6 +75,10 @@ private fun MainContent(
     PicaPlusTheme {
         MainContent(navController = navController) {
             guestNav(navController)
+
+            composable(route = Main) {
+                MainScreen()
+            }
         }
     }
 }
@@ -95,5 +103,9 @@ private fun Preview(
 ) {
     MainContent(navController = navController) {
         guestNavPreview(navController = navController)
+
+        composable(route = Main) {
+            MainPreview()
+        }
     }
 }

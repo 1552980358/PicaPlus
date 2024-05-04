@@ -22,7 +22,7 @@
     <string name="screen_greeting_text_state_loading">Loading account metadata…</string>
     <string name="screen_greeting_text_state_success">Welcome back</string>
     <string name="screen_greeting_image_description_avatar">Avatar</string>
-    <string name="screen_greeting_dialog_error_title">Request Account Metadata Failed</string>
+    <string name="screen_greeting_dialog_error_title">Request Account Profile Failed</string>
     <string name="screen_greeting_dialog_error_text_connection">Connection error occurred when requesting account Metadata.</string>
     <string name="screen_greeting_dialog_error_text_invalid">Invalid content was responded when requesting account Metadata.</string>
     <string name="screen_greeting_dialog_error_text_unauthorized">Unauthorized status code was received when requesting account Metadata.</string>
@@ -56,5 +56,8 @@
     <string name="screen_register_snackbar_error_duplicated">Duplicated username input</string>
     <string name="screen_register_snackbar_error_unknown_response">Unknown server response content</string>
     <string name="screen_register_snackbar_error_unknown">Unknown error occurs</string>
+
+    <string name="screen_main_navigation_home">Home</string>
+    <string name="screen_main_navigation_category">Category</string>
 
 </resources>
