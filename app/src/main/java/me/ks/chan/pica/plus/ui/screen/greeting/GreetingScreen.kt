@@ -171,6 +171,7 @@ fun GreetingPreview(
 
     GreetingContent(
         state = state,
+        updateProfile = {},
         onSuccess = onSuccess,
         onError = onError,
     )
