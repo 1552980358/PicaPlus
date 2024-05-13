@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="pica_category_everyone_reading">Everyone Reading</string>
+    <string name="pica_category_master_recommendation">Master Recommendation</string>
+    <string name="pica_category_today_in_previous_years">Today in Previous Years</string>
+    <string name="pica_category_pica_recommendation">Pica Recommendation</string>
+    <string name="pica_category_pica_translated">Pica Translated</string>
+    <string name="pica_category_recent_years">Recent Years</string>
+    <string name="pica_category_full_color">Full Color</string>
+    <string name="pica_category_long_story">Long Story</string>
+    <string name="pica_category_doujin">Doujin</string>
+    <string name="pica_category_short_story">Short Story</string>
+    <string name="pica_category_madoka_shin">Madoka Shin</string>
+    <string name="pica_category_granblue_fantasy">Granblue Fantasy</string>
+    <string name="pica_category_cg">CG Image</string>
+    <string name="pica_category_english">English</string>
+    <string name="pica_category_raw">Raw</string>
+    <string name="pica_category_pure_love">Pure Love</string>
+    <string name="pica_category_lesbian">Lesbian</string>
+    <string name="pica_category_gay">Gay</string>
+    <string name="pica_category_otokonoko">Otokonoko</string>
+    <string name="pica_category_harem">Harem</string>
+    <string name="pica_category_futanari">Futanari</string>
+    <string name="pica_category_tankobon">Tankobon</string>
+    <string name="pica_category_elder_sister">Elder Sister</string>
+    <string name="pica_category_younger_sister">Younger Sister</string>
+    <string name="pica_category_sadomasochism">Sadomasochism</string>
+    <string name="pica_category_sexual_swap">Sexual Swap</string>
+    <string name="pica_category_foot_fetishism">Foot Fetishism</string>
+    <string name="pica_category_married_woman">Married Woman</string>
+    <string name="pica_category_ntr">NTR</string>
+    <string name="pica_category_rape">Rape</string>
+    <string name="pica_category_non_human">Non-human</string>
+    <string name="pica_category_kantai_collection">Kantai Collection</string>
+    <string name="pica_category_love_live">Love Live</string>
+    <string name="pica_category_sward_online">Sward Online</string>
+    <string name="pica_category_fate">Fate</string>
+    <string name="pica_category_toho_project">Toho Project</string>
+    <string name="pica_category_web_cartoon">Web Cartoon</string>
+    <string name="pica_category_copyrighted">Copyrighted</string>
+    <string name="pica_category_western">Western</string>
+    <string name="pica_category_cosplay">Cosplay</string>
+    <string name="pica_category_bizarre">Bizarre</string>
+
+</resources>
