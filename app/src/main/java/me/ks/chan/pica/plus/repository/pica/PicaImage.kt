@@ -20,6 +20,9 @@ data class PicaImage(
 ) {
 
     val url: String
-        get() = host + UrlStaticRoute + path
+        get() = when {
+            host.contains(UrlStaticRoute) -> host + path
+            else -> host + UrlStaticRoute + path
+        }
 
 }
