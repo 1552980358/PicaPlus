@@ -37,13 +37,13 @@ class MainActivity : ComponentActivity() {
                 Color.TRANSPARENT, Color.TRANSPARENT
             )
         )
-        super.onCreate(savedInstanceState)
 
-        val splashScreen = installSplashScreen()
         val viewModel: MainViewModel by viewModels()
-        splashScreen.setKeepOnScreenCondition {
+        installSplashScreen().setKeepOnScreenCondition {
             viewModel.state.value !is MainState.Result
         }
+
+        super.onCreate(savedInstanceState)
 
         setContent {
             val state by viewModel.state.collectAsStateWithLifecycle()
@@ -52,7 +52,6 @@ class MainActivity : ComponentActivity() {
                 state = state,
             )
         }
-
         viewModel.splashSetup(this)
     }
 
