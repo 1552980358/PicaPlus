@@ -8,6 +8,6 @@ sealed interface MainState {
 
     data class Token(val token: String): Result
 
-    data object Completed: MainState
+    data object Completed: Result
 
 }

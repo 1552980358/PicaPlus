@@ -1,31 +1,26 @@
 package me.ks.chan.pica.plus.ui.activity.main.model
 
 import android.content.Context
+import kotlinx.coroutines.flow.catch
 import me.ks.chan.pica.plus.storage.protobuf.AccountStore
 import me.ks.chan.pica.plus.storage.protobuf.AddressProto.Account
 import me.ks.chan.pica.plus.ui.activity.main.viewmodel.MainState
 
-interface MainRepository {
+object MainRepository {
 
     suspend fun collect(
         context: Context,
         updateState: (MainState) -> Unit
-    )
-
-    companion object: MainRepository {
-
-        override suspend fun collect(
-            context: Context,
-            updateState: (MainState) -> Unit
-        ) {
-            context.AccountStore
-                .data
-                .collect { account ->
-                    account.let(::collectAsState)
-                        .let(updateState)
-                }
-        }
-
+    ) {
+        context.AccountStore
+            .data
+            .catch {
+                updateState(MainState.Completed)
+            }
+            .collect { account ->
+                account.let(::collectAsState)
+                    .let(updateState)
+            }
     }
 
 }
