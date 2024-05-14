@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.PicaPlus" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.PicaPlus.Launcher" parent="@style/Theme.SplashScreen">
+        <item name="postSplashScreenTheme">@style/Theme.PicaPlus</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
+    </style>
 </resources>
