@@ -1,16 +1,14 @@
 package me.ks.chan.pica.plus.ui.screen.register
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imeNestedScroll
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,12 +27,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -97,13 +93,11 @@ private fun RegisterContent(
     }
 
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .imePadding(),
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             @OptIn(ExperimentalMaterial3Api::class)
             TopAppBar(
-                title = { 
+                title = {
                     Text(
                         text = stringResource(
                             id = R.string.screen_register_top_bar_title
@@ -117,24 +111,24 @@ private fun RegisterContent(
                             contentDescription = stringResource(id = R.string.action_back)
                         )
                     }
-                }
+                },
             )
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         }
-    ) { paddings ->
+    ) { innerPaddings ->
         val focusManager = LocalFocusManager.current
 
         @OptIn(ExperimentalLayoutApi::class)
-        LazyColumn(
+        Column(
             modifier = Modifier
-                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .imeNestedScroll()
+                .imePadding()
                 .padding(horizontal = Spacing_16),
-            contentPadding = paddings,
         ) {
-            item {
+            Column(modifier = Modifier.padding(innerPaddings)) {
                 RegisterTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = fields.username,
@@ -155,9 +149,7 @@ private fun RegisterContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     }
                 )
-            }
 
-            item {
                 RegisterTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = fields.nickname,
@@ -178,9 +170,7 @@ private fun RegisterContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     }
                 )
-            }
 
-            item {
                 RegisterPasswordField(
                     modifier = Modifier.fillMaxWidth(),
                     value = fields.password,
@@ -195,9 +185,7 @@ private fun RegisterContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     }
                 )
-            }
 
-            item {
                 RegisterPasswordField(
                     modifier = Modifier.fillMaxWidth(),
                     value = fields.passwordConfirm,
@@ -212,9 +200,7 @@ private fun RegisterContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     },
                 )
-            }
 
-            item {
                 RegisterGenderField(
                     state = state,
                     genderField = fields.gender,
@@ -222,9 +208,7 @@ private fun RegisterContent(
                         updateFields(fields.copy(gender = gender))
                     }
                 )
-            }
 
-            item {
                 RegisterBirthdayField(
                     modifier = Modifier.fillMaxWidth(),
                     state = state,
@@ -236,9 +220,7 @@ private fun RegisterContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     },
                 )
-            }
 
-            item {
                 RegisterQuestionFields(
                     modifier = Modifier.padding(top = Spacing_8),
                     titleResId = R.string.screen_register_fields_question_a_title,
@@ -255,9 +237,7 @@ private fun RegisterContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     },
                 )
-            }
 
-            item {
                 RegisterQuestionFields(
                     modifier = Modifier.padding(top = Spacing_8),
                     titleResId = R.string.screen_register_fields_question_b_title,
@@ -274,9 +254,7 @@ private fun RegisterContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     },
                 )
-            }
 
-            item {
                 RegisterQuestionFields(
                     modifier = Modifier.padding(top = Spacing_8),
                     titleResId = R.string.screen_register_fields_question_c_title,
@@ -293,9 +271,7 @@ private fun RegisterContent(
                         focusManager.moveFocus(FocusDirection.Down)
                     },
                 )
-            }
 
-            item {
                 RegisterButton(
                     modifier = Modifier
                         .fillMaxWidth()
