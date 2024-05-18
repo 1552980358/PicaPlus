@@ -60,7 +60,6 @@ fun MainScreen() {
 private const val BottomBar = "BottomBar"
 private const val BottomPadding = "BottomPadding"
 
-
 @Composable
 private fun MainContent(
     navController: NavHostController,
@@ -75,6 +74,8 @@ private fun MainContent(
 
     Scaffold(
         bottomBar = {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+
             AnimatedVisibility(
                 visible = navigationBarSlideUp,
                 enter = slideInVertically(
@@ -91,8 +92,9 @@ private fun MainContent(
                     MainNavigation.entries
                         .forEach { mainNavigation ->
                             MainNavigationItem(
-                                navController = navController,
                                 mainNavigation = mainNavigation,
+                                navController = navController,
+                                navBackStackEntry = navBackStackEntry,
                             )
                         }
                 }
