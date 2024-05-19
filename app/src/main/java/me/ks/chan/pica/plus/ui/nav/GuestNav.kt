@@ -107,7 +107,7 @@ fun NavGraphBuilder.guestNav(navController: NavHostController) {
             GreetingScreen(
                 onSuccess = {
                     navController.navigate(Main) {
-                        popUpTo(Greeting) {
+                        popUpTo(Guest) {
                             inclusive = true
                         }
                     }
