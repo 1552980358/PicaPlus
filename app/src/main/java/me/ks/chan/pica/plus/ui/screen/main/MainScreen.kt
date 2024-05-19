@@ -36,7 +36,7 @@ import me.ks.chan.pica.plus.ui.screen.home.HomePreview
 import me.ks.chan.pica.plus.ui.screen.home.HomeScreen
 import me.ks.chan.pica.plus.ui.screen.main.composable.MainNavigationItem
 import me.ks.chan.pica.plus.ui.screen.main.model.MainNavigation
-import me.ks.chan.pica.plus.ui.theme.Transition_200
+import me.ks.chan.pica.plus.ui.theme.Duration_Medium4
 import me.ks.chan.pica.plus.util.compose.FalseState
 
 const val Main = "main"
@@ -80,11 +80,7 @@ private fun MainContent(
                 visible = navigationBarSlideUp,
                 enter = slideInVertically(
                     initialOffsetY = { it },
-                    animationSpec = tween(durationMillis = Transition_200, easing = LinearEasing),
-                ),
-                exit = slideOutVertically(
-                    targetOffsetY = { it },
-                    animationSpec = tween(durationMillis = Transition_200, easing = LinearEasing),
+                    animationSpec = tween(durationMillis = Duration_Medium4),
                 ),
                 label = BottomBar,
             ) {
