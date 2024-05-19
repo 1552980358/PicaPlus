@@ -1,7 +1,5 @@
 package me.ks.chan.pica.plus.ui.screen.register.composable
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActionScope
@@ -20,6 +18,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import me.ks.chan.pica.plus.R
@@ -49,16 +49,20 @@ fun RegisterBirthdayField(
         )
     }
 
-    val interactionSource = remember { MutableInteractionSource() }
-    val isPressed by interactionSource.collectIsPressedAsState()
-    LaunchedEffect(key1 = isPressed) {
-        if (isPressed) {
-            pickDate = true
+    val focusManager = LocalFocusManager.current
+    LaunchedEffect(key1 = pickDate) {
+        if (!pickDate) {
+            focusManager.clearFocus()
         }
     }
 
     RegisterTextField(
-        modifier = modifier,
+        modifier = modifier
+            .onFocusChanged {
+                if (it.isFocused) {
+                    pickDate = true
+                }
+            },
         value = birthdayMillisField.let(::asDateString),
         enabled = state.editable,
         labelResId = R.string.screen_register_field_birthday_label,
@@ -71,7 +75,6 @@ fun RegisterBirthdayField(
                 )
             )
         },
-        interactionSource = interactionSource,
         onNext = onNext,
         readOnly = true,
     )
