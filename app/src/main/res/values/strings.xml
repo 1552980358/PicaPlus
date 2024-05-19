@@ -60,4 +60,7 @@
     <string name="screen_main_navigation_home">Home</string>
     <string name="screen_main_navigation_category">Category</string>
 
+    <string name="screen_category_top_bar_title">Category</string>
+    <string name="screen_category_top_bar_action_search">Search</string>
+
 </resources>
