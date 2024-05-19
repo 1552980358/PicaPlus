@@ -4,16 +4,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -58,7 +53,6 @@ fun MainScreen() {
 }
 
 private const val BottomBar = "BottomBar"
-private const val BottomPadding = "BottomPadding"
 
 @Composable
 private fun MainContent(
@@ -97,14 +91,9 @@ private fun MainContent(
             }
         }
     ) { outerPaddings ->
-        val bottomPadding by animateDpAsState(
-            targetValue = outerPaddings.calculateBottomPadding(),
-            animationSpec = tween(durationMillis = Transition_200, easing = LinearEasing),
-            label = BottomPadding,
-        )
-
         NavHost(
-            modifier = Modifier.padding(bottom = bottomPadding),
+            modifier = Modifier
+                .padding(bottom = outerPaddings.calculateBottomPadding()),
             navController = navController,
             startDestination = startDestination,
             builder = navGraphBuilder,
