@@ -24,7 +24,7 @@ fun GreetingErrorDialog(
             onDismissRequest = onCancel,
             confirmButton = {
                 ConfirmButtonRow(
-                    errorType = state.type,
+                    errorState = state,
                     onCancel = onCancel,
                     onRetry = onRetry,
                 )
@@ -37,7 +37,7 @@ fun GreetingErrorDialog(
                 )
             },
             text = {
-                Text(text = stringResource(id = state.type.resId))
+                Text(text = stringResource(id = state.messageResId))
             }
         )
     }
@@ -45,7 +45,7 @@ fun GreetingErrorDialog(
 
 @Composable
 private fun ConfirmButtonRow(
-    errorType: GreetingState.Error.Type,
+    errorState: GreetingState.Error,
     onCancel: () -> Unit,
     onRetry: () -> Unit,
 ) {
@@ -53,15 +53,15 @@ private fun ConfirmButtonRow(
         TextButton(onClick = onCancel) {
             Text(
                 text = stringResource(
-                    id = when (errorType) {
-                        GreetingState.Error.Type.Unauthorized -> R.string.action_ok
+                    id = when (errorState) {
+                        is GreetingState.Error.Unauthorized -> R.string.action_ok
                         else -> R.string.action_cancel
                     }
                 )
             )
         }
 
-        if (errorType != GreetingState.Error.Type.Unauthorized) {
+        if (errorState !is GreetingState.Error.Unauthorized) {
             TextButton(onClick = onRetry) {
                 Text(
                     text = stringResource(
@@ -80,7 +80,7 @@ private fun Preview() {
         modifier = Modifier.fillMaxSize()
     ) {
         GreetingErrorDialog(
-            state = GreetingState.Error(GreetingState.Error.Type.Connection),
+            state = GreetingState.Error.Connection,
             onCancel = {},
             onRetry = {},
         )

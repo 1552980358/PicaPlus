@@ -12,17 +12,29 @@ sealed interface GreetingState {
         val avatar: String?
     ): GreetingState
 
-    data class Error(
-        val type: Type
-    ): GreetingState {
+    sealed interface Error: GreetingState {
 
-        enum class Type(
-            @StringRes val resId: Int
-        ) {
-            Connection(R.string.screen_greeting_dialog_error_text_connection),
-            InvalidResponse(R.string.screen_greeting_dialog_error_text_invalid),
-            Unauthorized(R.string.screen_greeting_dialog_error_text_unauthorized),
-            Unknown(R.string.screen_greeting_dialog_error_text_unknown)
+        val messageResId: Int
+            @StringRes get
+
+        data object Connection: Error {
+            override val messageResId: Int
+                get() = R.string.screen_greeting_dialog_error_text_connection
+        }
+
+        data object InvalidResponse: Error {
+            override val messageResId: Int
+                get() = R.string.screen_greeting_dialog_error_text_invalid
+        }
+
+        data object Unauthorized: Error {
+            override val messageResId: Int
+                get() = R.string.screen_greeting_dialog_error_text_unauthorized
+        }
+
+        data object Unknown: Error {
+            override val messageResId: Int
+                get() = R.string.screen_greeting_dialog_error_text_unknown
         }
 
     }

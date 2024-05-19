@@ -31,7 +31,7 @@ class PicaCategoriesRepositoryTest {
                             result.categoryList.let(::println)
                         }
                         is Error -> {
-                            result.type.let(::println)
+                            result.let(::println)
                             assert(false)
                         }
                     }

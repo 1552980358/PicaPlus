@@ -19,13 +19,15 @@ sealed interface PicaProfileRepositoryResult {
         val verified: Boolean,
     ): PicaProfileRepositoryResult
 
-    data class Error(val type: Type): PicaProfileRepositoryResult {
+    sealed interface Error: PicaProfileRepositoryResult {
 
-        enum class Type {
-            EmptyResponse,
-            Unauthorized,
-            UnknownStatusCode,
-        }
+        data object InvalidResponse: Error
+
+        data object Unauthorized: Error
+
+        data object UnknownStatusCode: Error
+
+        data object InvalidState: Error
 
     }
 

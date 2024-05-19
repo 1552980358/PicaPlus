@@ -29,7 +29,9 @@ class GreetingViewModel: ViewModel() {
 
     fun updateProfile() {
         viewModelScope.defaultJob {
-            GreetingRepository.collect(::updateState)
+            GreetingRepository.collect(
+                updateState = ::updateState
+            )
         }
     }
 

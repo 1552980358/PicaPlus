@@ -1,5 +1,6 @@
 package me.ks.chan.pica.plus.repository.pica.users.profile
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -86,32 +87,35 @@ private const val ProfileApiPath = "users/profile"
 
 object PicaProfileRepository {
 
-    val repositoryFlow = flow {
-        val response = PicaRepository.get(ProfileApiPath)
-        val result = when (response.code) {
-            RequestSuccess -> {
-                response.deserialize<ResponseBody>()
-                    ?.data
-                    ?.user
-                    ?.let(::collectResultState)
+    val repositoryFlow: Flow<PicaProfileRepositoryResult>
+        get() = flow {
+            val response = PicaRepository.get(ProfileApiPath)
+
+            val result = when (response.code) {
+                RequestSuccess -> {
+                    response.deserialize<ResponseBody>()
+                        ?.data
+                        ?.user
+                        ?.let(::asSuccessState)
+                        ?: Error.InvalidResponse
+                }
+                RequestUnauthorized -> {
+                    Error.Unauthorized
+                }
+                else -> {
+                    response.deserialize<PicaRepositoryErrorResponse>()
+                        ?.error
+                        ?.let { Error.UnknownStatusCode }
+                        ?: Error.InvalidState
+                }
             }
-            RequestUnauthorized -> {
-                Error(Error.Type.Unauthorized)
-            }
-            else -> {
-                response.deserialize<PicaRepositoryErrorResponse>()
-                    ?.error
-                    ?.let { Error(Error.Type.UnknownStatusCode) }
-            }
+
+            emit(result)
         }
-        emit(
-            result ?: Error(Error.Type.EmptyResponse)
-        )
-    }
 
 }
 
-private fun collectResultState(user: Data.User): Success {
+private fun asSuccessState(user: Data.User): Success {
     return Success(
         id = user.id,
         username = user.username,
