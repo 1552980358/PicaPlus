@@ -14,11 +14,12 @@ sealed interface PicaCategoriesRepositoryResult {
         )
     }
 
-    data class Error(val type: Type): PicaCategoriesRepositoryResult {
-        enum class Type {
-            InvalidResponse,
-            Unknown,
-        }
+    sealed interface Error: PicaCategoriesRepositoryResult {
+
+        data object InvalidResponse: Error
+
+        data object InvalidState: Error
+
     }
 
 }

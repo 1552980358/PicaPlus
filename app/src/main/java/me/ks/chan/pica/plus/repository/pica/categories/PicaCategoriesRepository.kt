@@ -58,10 +58,10 @@ object PicaCategoriesRepository {
                         ?.categoryList
                         ?.map(::Category)
                         ?.let(::Success)
-                        ?: Error(Error.Type.InvalidResponse)
+                        ?: Error.InvalidResponse
                 }
                 else -> {
-                    Error(Error.Type.Unknown)
+                    Error.InvalidState
                 }
             }
 
