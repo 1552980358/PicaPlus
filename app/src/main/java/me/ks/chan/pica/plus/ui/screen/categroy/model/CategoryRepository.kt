@@ -25,20 +25,15 @@ object CategoryRepository {
 }
 
 private fun collectErrorState(cause: Throwable): CategoryState {
-    return cause.let(::asCategoryStateErrorType)
-        .let(CategoryState::Error)
-}
-
-private fun asCategoryStateErrorType(cause: Throwable): CategoryState.Error.Type {
     return when (cause) {
         is IOException -> {
-            CategoryState.Error.Type.Network
+            CategoryState.Error.Network
         }
         is SerializationException -> {
-            CategoryState.Error.Type.InvalidResponse
+            CategoryState.Error.InvalidResponse
         }
         else -> {
-            CategoryState.Error.Type.Unknown
+            CategoryState.Error.Unknown
         }
     }
 }
@@ -52,9 +47,7 @@ private fun collectResultState(result: PicaCategoriesRepositoryResult): Category
                 .let(CategoryState::Success)
         }
         is PicaCategoriesRepositoryResult.Error -> {
-            result.type
-                .let(::asCategoryStateErrorType)
-                .let(CategoryState::Error)
+            result.let(::asCategoryStateError)
         }
     }
 }
@@ -68,15 +61,15 @@ private fun asCategoryModel(
     )
 }
 
-private fun asCategoryStateErrorType(
-    type: PicaCategoriesRepositoryResult.Error.Type
-): CategoryState.Error.Type {
-    return when (type) {
-        PicaCategoriesRepositoryResult.Error.Type.InvalidResponse -> {
-            CategoryState.Error.Type.InvalidResponse
+private fun asCategoryStateError(
+    error: PicaCategoriesRepositoryResult.Error
+): CategoryState.Error {
+    return when (error) {
+        PicaCategoriesRepositoryResult.Error.InvalidResponse -> {
+            CategoryState.Error.InvalidResponse
         }
-        PicaCategoriesRepositoryResult.Error.Type.Unknown -> {
-            CategoryState.Error.Type.Unknown
+        PicaCategoriesRepositoryResult.Error.InvalidState -> {
+            CategoryState.Error.InvalidState
         }
     }
 }

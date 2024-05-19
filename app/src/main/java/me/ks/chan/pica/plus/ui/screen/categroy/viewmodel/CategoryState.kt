@@ -6,12 +6,16 @@ sealed interface CategoryState {
 
     data class Success(val categoryList: List<CategoryModel>): CategoryState
 
-    data class Error(val type: Type): CategoryState {
-        enum class Type {
-            Network,
-            InvalidResponse,
-            Unknown,
-        }
+    sealed interface Error: CategoryState {
+
+        data object Network: Error
+
+        data object InvalidResponse: Error
+
+        data object InvalidState: Error
+
+        data object Unknown: Error
+
     }
 
 }
