@@ -83,7 +83,6 @@ fun NavGraphBuilder.guestNav(navController: NavHostController) {
                         durationMillis = Duration_Long1
                     ),
                 ) + fadeOut()
-
             }
         ) {
             RegisterScreen(

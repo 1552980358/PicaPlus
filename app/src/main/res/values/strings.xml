@@ -61,6 +61,20 @@
     <string name="screen_main_navigation_home">Home</string>
     <string name="screen_main_navigation_category">Category</string>
 
+    <string name="screen_home_top_bar_title">Home</string>
+    <string name="screen_home_snackbar_error_network">Network error</string>
+    <string name="screen_home_snackbar_error_invalid_response">Invalid response</string>
+    <string name="screen_home_snackbar_error_unknown_state">Unknown state</string>
+    <string name="screen_home_snackbar_error_unknown">Unknown error</string>
+    <string name="screen_home_comic_item_trailing">Detail</string>
+    <string name="screen_home_comic_menu_item_pages">Pages</string>
+    <string name="screen_home_comic_menu_item_serializing">Serializing</string>
+    <string name="screen_home_comic_menu_item_serializing_trailing_ended">Serialization ended</string>
+    <string name="screen_home_comic_menu_item_likes">Likes</string>
+    <string name="screen_home_comic_menu_item_views">Views</string>
+    <string name="screen_home_comic_menu_item_categories">Categories</string>
+    <string name="screen_home_comic_menu_item_categories_trailing">View categories</string>
+
     <string name="screen_category_top_bar_title">Category</string>
 
 </resources>

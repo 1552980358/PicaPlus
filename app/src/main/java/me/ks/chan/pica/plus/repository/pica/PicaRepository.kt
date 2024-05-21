@@ -18,6 +18,7 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
+import okio.IOException
 
 private val PicaRepositoryClient by lazy {
     OkHttpClient.Builder()
@@ -42,12 +43,15 @@ object PicaRepository {
         }
     }
 
+    @Throws(IOException::class)
     suspend inline fun get(path: String): Response =
         request(Get(path))
 
+    @Throws(IOException::class)
     suspend inline fun <reified Body> post(path: String, body: Body): Response =
         request(Post(path, body))
 
+    @Throws(IOException::class)
     suspend fun request(
         requestMethod: RequestMethod
     ): Response = ioBlocking {
