@@ -9,45 +9,32 @@ import me.ks.chan.pica.plus.repository.pica.PicaRepositoryDataResponse
 import me.ks.chan.pica.plus.util.okhttp.RequestSuccess
 import me.ks.chan.pica.plus.util.okhttp.deserialize
 
-private const val FieldComicList = "comics"
-
-private const val ComicFieldId = "_id"
-private const val ComicFieldTitle = "title"
-private const val ComicFieldAuthor = "author"
-private const val ComicFieldPages = "pagesCount"
-private const val ComicFieldEpisodes = "epsCount"
-private const val ComicFieldFinished = "finished"
-private const val ComicFieldCategoryList = "categories"
-private const val ComicFieldThumb = "thumb"
-private const val ComicFieldViews = "totalViews"
-private const val ComicFieldLikes = "totalLikes"
-
 @Serializable
 private data class Data(
-    @SerialName(FieldComicList)
+    @SerialName("comics")
     val comicList: List<Comic>
 ) {
     @Serializable
     data class Comic(
-        @SerialName(ComicFieldId)
+        @SerialName("_id")
         val id: String,
-        @SerialName(ComicFieldTitle)
+        @SerialName("title")
         val title: String,
-        @SerialName(ComicFieldAuthor)
+        @SerialName("author")
         val author: String,
-        @SerialName(ComicFieldCategoryList)
+        @SerialName("categories")
         val categoryList: List<String>,
-        @SerialName(ComicFieldEpisodes)
+        @SerialName("epsCount")
         val episodes: Int,
-        @SerialName(ComicFieldFinished)
+        @SerialName("finished")
         val finished: Boolean,
-        @SerialName(ComicFieldLikes)
+        @SerialName("totalLikes")
         val likes: Int,
-        @SerialName(ComicFieldPages)
+        @SerialName("pagesCount")
         val pages: Int,
-        @SerialName(ComicFieldThumb)
+        @SerialName("thumb")
         val thumb: PicaImage,
-        @SerialName(ComicFieldViews)
+        @SerialName("totalViews")
         val views: Int,
         @Deprecated("This is a duplicated field for lower version compatibility.")
         @SerialName("likesCount")
@@ -96,7 +83,7 @@ private fun asResultComicList(data: Data): List<PicaRandomComicsRepositoryResult
                 author = it.author,
                 categoryList = it.categoryList,
                 episodes = it.episodes,
-                finished = it.finished,
+                serializing = it.finished.not(),
                 likes = it.likes,
                 pages = it.pages,
                 thumb = it.thumb.url,

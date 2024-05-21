@@ -9,7 +9,7 @@ sealed interface PicaRandomComicsRepositoryResult {
             val author: String,
             val categoryList: List<String>,
             val episodes: Int,
-            val finished: Boolean,
+            val serializing: Boolean,
             val likes: Int,
             val pages: Int,
             val thumb: String,
