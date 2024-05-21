@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -60,6 +61,7 @@ fun HomeScreen() {
     HomeContent(
         state = state,
         comicList = viewModel.comicList,
+        updateState = viewModel::updateState,
         updateComicList = viewModel::updateComicList,
         refreshComicList = viewModel::refreshComicList,
     )
@@ -70,6 +72,7 @@ private const val HomeComicListLoadingStateAnimation = "HomeComicListLoadingStat
 private fun <L> HomeContent(
     state: HomeState,
     comicList: L,
+    updateState: (HomeState) -> Unit,
     updateComicList: () -> Unit,
     refreshComicList: () -> Unit,
 ) where L: List<HomeComicModel>, L: StateObject {
@@ -101,13 +104,23 @@ private fun <L> HomeContent(
     val context = LocalContext.current
     LaunchedEffect(key1 = state) {
         if (state is HomeState.Error) {
-            snackbarHostState.showSnackbar(
+            val result = snackbarHostState.showSnackbar(
                 message = context.getString(state.messageResId),
                 actionLabel = context.getString(R.string.action_retry),
                 withDismissAction = true,
-                duration = SnackbarDuration.Indefinite,
+                duration = SnackbarDuration.Long,
             )
-            refreshComicList()
+            if (result == SnackbarResult.ActionPerformed) {
+                updateComicList()
+            }
+            when (result) {
+                SnackbarResult.ActionPerformed -> {
+                    updateComicList()
+                }
+                else -> {
+                    updateState(HomeState.Pending)
+                }
+            }
         }
     }
 
@@ -238,9 +251,8 @@ fun HomePreview() {
     HomeContent(
         state = state,
         comicList = comicList,
-        updateComicList = {
-        },
-        refreshComicList = {
-        },
+        updateState = {},
+        updateComicList = {},
+        refreshComicList = {},
     )
 }

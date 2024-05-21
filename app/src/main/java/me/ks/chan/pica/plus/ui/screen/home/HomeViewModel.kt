@@ -36,7 +36,7 @@ class HomeViewModel: ViewModel() {
         updateComicList()
     }
 
-    private fun updateState(state: HomeState) {
+    fun updateState(state: HomeState) {
         this.state.value = state
     }
 
