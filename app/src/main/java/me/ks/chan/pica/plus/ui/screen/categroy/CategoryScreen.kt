@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.repository.pica.PicaComicCategory
 import me.ks.chan.pica.plus.ui.composable.scaffold.ProvideNavBarItemSecondaryClick
@@ -31,7 +32,6 @@ import me.ks.chan.pica.plus.ui.screen.categroy.composable.CategoryListItem
 import me.ks.chan.pica.plus.ui.screen.categroy.composable.categoryListShimmer
 import me.ks.chan.pica.plus.ui.screen.categroy.viewmodel.CategoryModel
 import me.ks.chan.pica.plus.ui.screen.categroy.viewmodel.CategoryState
-import me.ks.chan.pica.plus.util.kotlinx.coroutine.defaultJob
 
 @Composable
 fun CategoryScreen() {
@@ -42,8 +42,6 @@ fun CategoryScreen() {
         state = state,
     )
 }
-private const val ScrollBehaviorHeightOffsetAnimation =
-    "ScrollBehaviorHeightOffsetAnimation"
 
 @Composable
 private fun CategoryContent(
@@ -58,10 +56,12 @@ private fun CategoryContent(
 
     val lazyListState = rememberLazyListState()
     ProvideNavBarItemSecondaryClick {
-        coroutineScope.defaultJob {
-            lazyListState.animateScrollToItem(0)
-            @OptIn(ExperimentalMaterial3Api::class)
-            scrollBehavior.state.heightOffset -= scrollBehavior.state.heightOffsetLimit
+        if (lazyListState.canScrollBackward) {
+            coroutineScope.launch {
+                lazyListState.animateScrollToItem(0)
+                @OptIn(ExperimentalMaterial3Api::class)
+                scrollBehavior.state.heightOffset -= scrollBehavior.state.heightOffsetLimit
+            }
         }
     }
 
@@ -81,7 +81,7 @@ private fun CategoryContent(
                         Icon(
                             imageVector = Search,
                             contentDescription = stringResource(
-                                id = R.string.screen_category_top_bar_action_search
+                                id = R.string.action_search
                             )
                         )
                     }
