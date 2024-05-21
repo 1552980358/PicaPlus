@@ -3,5 +3,6 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.google.protobuf) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
+    alias(libs.plugins.jetbrains.kotlin.compose.compiler) apply false
     alias(libs.plugins.jetbrains.kotlinx.serialization) apply false
 }

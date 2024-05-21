@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlin.compose.compiler)
     alias(libs.plugins.jetbrains.kotlinx.serialization)
     alias(libs.plugins.google.protobuf)
 }
@@ -43,24 +46,22 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     kotlin {
         jvmToolchain(17)
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_17
+        }
         kotlinOptions.freeCompilerArgs += listOf(
             "-XXLanguage:+ExplicitBackingFields",
         )
-        sourceSets.all {
-            languageSettings {
-                languageVersion = "2.0"
-            }
-        }
     }
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
     packaging {
         resources {
