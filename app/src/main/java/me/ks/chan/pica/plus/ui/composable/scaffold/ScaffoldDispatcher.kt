@@ -21,7 +21,9 @@ class ScaffoldDispatcher {
         DisposableEffect(key1 = Unit) {
             navBarItemSecondaryClick = action
             onDispose {
-                navBarItemSecondaryClick = null
+                if (navBarItemSecondaryClick == action) {
+                    navBarItemSecondaryClick = null
+                }
             }
         }
     }
