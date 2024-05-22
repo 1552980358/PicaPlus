@@ -7,6 +7,8 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,6 +29,7 @@ import me.ks.chan.pica.plus.ui.nav.guestNavPreview
 import me.ks.chan.pica.plus.ui.screen.main.Main
 import me.ks.chan.pica.plus.ui.screen.main.MainPreview
 import me.ks.chan.pica.plus.ui.screen.main.MainScreen
+import me.ks.chan.pica.plus.ui.theme.Duration_Long2
 import me.ks.chan.pica.plus.ui.theme.PicaPlusTheme
 
 class MainActivity : ComponentActivity() {
@@ -75,7 +78,16 @@ private fun MainContent(
         MainContent(navController = navController) {
             guestNav(navController)
 
-            composable(route = Main) {
+            composable(
+                route = Main,
+                enterTransition = {
+                    fadeIn(
+                        animationSpec = tween(
+                            durationMillis = Duration_Long2
+                        )
+                    )
+                },
+            ) {
                 MainScreen()
             }
         }

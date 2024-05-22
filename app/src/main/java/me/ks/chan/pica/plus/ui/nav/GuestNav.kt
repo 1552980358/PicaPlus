@@ -17,8 +17,7 @@ import me.ks.chan.pica.plus.ui.screen.register.RegisterPreview
 import me.ks.chan.pica.plus.ui.screen.register.RegisterScreen
 import me.ks.chan.pica.plus.ui.screen.sign_in.SignInPreview
 import me.ks.chan.pica.plus.ui.screen.sign_in.SignInScreen
-import me.ks.chan.pica.plus.ui.theme.Duration_Long1
-import me.ks.chan.pica.plus.ui.theme.Duration_Medium4
+import me.ks.chan.pica.plus.ui.theme.Duration_Long2
 
 const val Guest = "guest"
 const val SignIn = "sign_in"
@@ -36,12 +35,20 @@ fun NavGraphBuilder.guestNav(navController: NavHostController) {
                     Register -> {
                         slideInVertically (
                             animationSpec = tween(
-                                durationMillis = Duration_Medium4
+                                durationMillis = Duration_Long2
                             ),
                             initialOffsetY = { -it / SlideOffsetDivider }
-                        ) + fadeIn()
+                        ) + fadeIn(
+                            animationSpec = tween(
+                                durationMillis = Duration_Long2
+                            )
+                        )
                     }
-                    else -> { fadeIn() }
+                    else -> {
+                        fadeIn(
+                            animationSpec = tween(durationMillis = Duration_Long2)
+                        )
+                    }
                 }
             },
             exitTransition = {
@@ -49,12 +56,20 @@ fun NavGraphBuilder.guestNav(navController: NavHostController) {
                     Register -> {
                         slideOutVertically(
                             animationSpec = tween(
-                                durationMillis = Duration_Long1
+                                durationMillis = Duration_Long2
                             ),
                             targetOffsetY = { -it / SlideOffsetDivider }
+                        ) + fadeOut(
+                            animationSpec = tween(
+                                durationMillis = Duration_Long2
+                            )
                         )
                     }
-                    else -> { fadeOut() }
+                    else -> {
+                        fadeOut(
+                            animationSpec = tween(durationMillis = Duration_Long2)
+                        )
+                    }
                 }
             },
         ) {
@@ -71,18 +86,26 @@ fun NavGraphBuilder.guestNav(navController: NavHostController) {
                 slideIntoContainer(
                     towards = SlideDirection.Up,
                     animationSpec = tween(
-                        durationMillis = Duration_Long1
+                        durationMillis = Duration_Long2
                     ),
                     initialOffset = { it * SlideOffsetDivider.dec() / SlideOffsetDivider }
-                ) + fadeIn()
+                ) + fadeIn(
+                    animationSpec = tween(
+                        durationMillis = Duration_Long2
+                    )
+                )
             },
             exitTransition = {
                 slideOutOfContainer(
                     towards = SlideDirection.Down,
                     animationSpec = tween(
-                        durationMillis = Duration_Long1
+                        durationMillis = Duration_Long2
                     ),
-                ) + fadeOut()
+                ) + fadeOut(
+                    animationSpec = tween(
+                        durationMillis = Duration_Long2
+                    )
+                )
             }
         ) {
             RegisterScreen(
@@ -94,12 +117,12 @@ fun NavGraphBuilder.guestNav(navController: NavHostController) {
             route = Greeting,
             enterTransition = {
                 fadeIn(
-                    animationSpec = tween(durationMillis = Duration_Long1)
+                    animationSpec = tween(durationMillis = Duration_Long2)
                 )
             },
             exitTransition = {
                 fadeOut(
-                    animationSpec = tween(durationMillis = Duration_Long1)
+                    animationSpec = tween(durationMillis = Duration_Long2)
                 )
             },
         ) {
