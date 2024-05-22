@@ -1,21 +1,16 @@
-package me.ks.chan.pica.plus.repository.pica
+package me.ks.chan.pica.plus.repository.pica.field
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-private const val FieldName = "originalName"
-private const val FieldHost = "fileServer"
-private const val FieldPath = "path"
-
 private const val UrlStaticRoute = "/static/"
-
 @Serializable
 data class PicaImage(
-    @SerialName(FieldName)
+    @SerialName("originalName")
     val name: String,
-    @SerialName(FieldHost)
+    @SerialName("fileServer")
     val host: String,
-    @SerialName(FieldPath)
+    @SerialName("path")
     val path: String,
 ) {
 

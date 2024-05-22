@@ -3,7 +3,7 @@ package me.ks.chan.pica.plus.repository.pica.comics.random
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.ks.chan.pica.plus.repository.pica.PicaImage
+import me.ks.chan.pica.plus.repository.pica.field.PicaImage
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.repository.pica.PicaRepositoryDataResponse
 import me.ks.chan.pica.plus.util.okhttp.RequestSuccess
