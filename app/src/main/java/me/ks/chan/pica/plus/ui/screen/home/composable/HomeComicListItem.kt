@@ -49,7 +49,7 @@ import me.ks.chan.pica.plus.ui.icon.round.Done
 import me.ks.chan.pica.plus.ui.icon.round.Heart
 import me.ks.chan.pica.plus.ui.icon.round.MoreHoriz
 import me.ks.chan.pica.plus.ui.icon.round.Pages
-import me.ks.chan.pica.plus.ui.icon.round.Replay
+import me.ks.chan.pica.plus.ui.icon.round.Refresh
 import me.ks.chan.pica.plus.ui.icon.round.Update
 import me.ks.chan.pica.plus.ui.icon.round.Visibility
 import me.ks.chan.pica.plus.ui.screen.home.viewmodel.HomeComicCategoryModel
@@ -145,7 +145,7 @@ private fun ComicThumbImage(
         error = {
             IconButton(onClick = { retryHash++ }) {
                 Icon(
-                    imageVector = Replay,
+                    imageVector = Refresh,
                     contentDescription = stringResource(
                         id = R.string.action_retry
                     )

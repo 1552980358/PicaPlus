@@ -22,7 +22,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.ui.composable.shimmer.shimmer
-import me.ks.chan.pica.plus.ui.icon.round.Replay
+import me.ks.chan.pica.plus.ui.icon.round.Refresh
 import me.ks.chan.pica.plus.ui.screen.categroy.viewmodel.CategoryModel
 import me.ks.chan.pica.plus.ui.theme.Corner_12
 import me.ks.chan.pica.plus.ui.theme.Sizing_56
@@ -62,7 +62,7 @@ private fun CategoryListItemLeading(
             isError -> {
                 IconButton(onClick = { error = false }) {
                     Icon(
-                        imageVector = Replay,
+                        imageVector = Refresh,
                         contentDescription = stringResource(
                             id = R.string.action_retry
                         )
