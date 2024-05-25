@@ -14,6 +14,7 @@ object HomeRepository {
     suspend fun collect(updateState: (HomeState) -> Unit) {
         PicaRandomComicsRepository.repositoryFlow
             .catch { cause ->
+                cause.printStackTrace()
                 cause.let(::collectErrorState)
                     .let(updateState)
             }

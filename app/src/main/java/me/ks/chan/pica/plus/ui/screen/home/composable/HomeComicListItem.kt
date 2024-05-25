@@ -66,13 +66,27 @@ fun LazyItemScope.HomeComicListItem(
 ) {
     var dropDownMenu by remember(::FalseState)
 
+    val supportingContent: (@Composable () -> Unit)? = when {
+        comic.author.isNullOrBlank() -> { null }
+        else -> {
+            @Composable {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = comic.author,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+    }
+
     @OptIn(ExperimentalFoundationApi::class)
     ListItem(
         modifier = Modifier
             .animateItemPlacement()
             .combinedClickable(
                 onLongClick = { dropDownMenu = true },
-                onClick = {},
+                onClick = { onClick(comic.id) },
             ),
         leadingContent = {
             ComicThumbImage(

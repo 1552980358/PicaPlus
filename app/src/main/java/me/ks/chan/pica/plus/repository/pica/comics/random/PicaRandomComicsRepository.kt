@@ -1,5 +1,6 @@
 package me.ks.chan.pica.plus.repository.pica.comics.random
 
+import kotlin.math.max
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -21,25 +22,43 @@ private data class Data(
         @SerialName("title")
         val title: String,
         @SerialName("author")
-        val author: String,
+        val author: String? = null,
         @SerialName("categories")
         val categoryList: List<String>,
         @SerialName("epsCount")
         val episodes: Int,
         @SerialName("finished")
         val finished: Boolean,
-        @SerialName("totalLikes")
-        val likes: Int,
         @SerialName("pagesCount")
         val pages: Int,
         @SerialName("thumb")
         val thumb: PicaImage,
+        /**
+         * Following fields are for backward capability.
+         **/
+        /**
+         * Open method see [Comic.views]
+         **/
         @SerialName("totalViews")
-        val views: Int,
-        @Deprecated("This is a duplicated field for lower version compatibility.")
+        private val totalViews: Int = 0,
+        @SerialName("viewsCount")
+        private val viewsCount: Int = 0,
+        /**
+         * Open method see [Comic.likes]
+         **/
+        @SerialName("totalLikes")
+        private val totalLikes: Int = 0,
         @SerialName("likesCount")
-        private val likesCount: Int,
-    )
+        private val likesCount: Int = 0,
+    ) {
+
+        val views: Int
+            get() = max(totalViews, viewsCount)
+
+        val likes: Int
+            get() = max(totalLikes, likesCount)
+
+    }
 }
 
 @Serializable

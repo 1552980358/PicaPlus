@@ -6,7 +6,7 @@ sealed interface PicaRandomComicsRepositoryResult {
         data class Comic(
             val id: String,
             val title: String,
-            val author: String,
+            val author: String?,
             val categoryList: List<String>,
             val episodes: Int,
             val serializing: Boolean,
