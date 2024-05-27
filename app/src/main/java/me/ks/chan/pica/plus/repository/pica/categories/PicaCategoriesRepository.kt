@@ -9,8 +9,9 @@ import me.ks.chan.pica.plus.repository.pica.categories.PicaCategoriesRepositoryR
 import me.ks.chan.pica.plus.repository.pica.field.PicaImage
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.repository.pica.PicaRepositoryDataResponse
-import me.ks.chan.pica.plus.util.okhttp.RequestSuccess
+import me.ks.chan.pica.plus.util.okhttp.ResponseStatus
 import me.ks.chan.pica.plus.util.okhttp.deserialize
+import me.ks.chan.pica.plus.util.okhttp.status
 
 @Serializable
 private data class Data(
@@ -51,8 +52,8 @@ object PicaCategoriesRepository {
         get() = flow {
             val response = PicaRepository.get(CategoriesApiPath)
 
-            val result = when (response.code) {
-                RequestSuccess -> {
+            val result = when (response.status) {
+                is ResponseStatus.Success -> {
                     response.deserialize<ResponseBody>()
                         ?.data
                         ?.categoryList

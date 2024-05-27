@@ -7,7 +7,8 @@ import kotlinx.serialization.json.Json
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.repository.pica.PicaRepositoryDataResponse
 import me.ks.chan.pica.plus.repository.pica.PicaRepositoryErrorResponse
-import me.ks.chan.pica.plus.util.okhttp.RequestSuccess
+import me.ks.chan.pica.plus.util.okhttp.ResponseStatus
+import me.ks.chan.pica.plus.util.okhttp.status
 
 private const val RequestFieldUsername = "email"
 private const val RequestFieldPassword = "password"
@@ -44,8 +45,8 @@ class PicaSignInRepository(
             RequestBody(username, password)
         )
 
-        val result = when (response.code) {
-            RequestSuccess -> {
+        val result = when (response.status) {
+            is ResponseStatus.Success -> {
                 val responseBody: ResponseBody? = response.body
                     ?.string()
                     ?.let(Json::decodeFromString)

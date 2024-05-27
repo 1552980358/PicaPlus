@@ -7,8 +7,9 @@ import kotlinx.serialization.Serializable
 import me.ks.chan.pica.plus.repository.pica.field.PicaImage
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.repository.pica.PicaRepositoryDataResponse
-import me.ks.chan.pica.plus.util.okhttp.RequestSuccess
+import me.ks.chan.pica.plus.util.okhttp.ResponseStatus
 import me.ks.chan.pica.plus.util.okhttp.deserialize
+import me.ks.chan.pica.plus.util.okhttp.status
 
 @Serializable
 private data class Data(
@@ -75,8 +76,8 @@ object PicaRandomComicsRepository {
     val repositoryFlow = flow {
         val response = PicaRepository.get(RandomComicsApiPath)
 
-        val result = when (response.code) {
-            RequestSuccess -> {
+        val result = when (response.status) {
+            is ResponseStatus.Success -> {
                 response.deserialize<ResponseBody>()
                     ?.data
                     ?.let(::asResultComicList)

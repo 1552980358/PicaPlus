@@ -8,11 +8,11 @@ import me.ks.chan.pica.plus.repository.pica.field.PicaImage
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.repository.pica.PicaRepositoryDataResponse
 import me.ks.chan.pica.plus.repository.pica.PicaRepositoryErrorResponse
-import me.ks.chan.pica.plus.util.okhttp.RequestSuccess
 import me.ks.chan.pica.plus.util.okhttp.deserialize
 import me.ks.chan.pica.plus.repository.pica.users.profile.PicaProfileRepositoryResult.Error
 import me.ks.chan.pica.plus.repository.pica.users.profile.PicaProfileRepositoryResult.Success
-import me.ks.chan.pica.plus.util.okhttp.RequestUnauthorized
+import me.ks.chan.pica.plus.util.okhttp.ResponseStatus
+import me.ks.chan.pica.plus.util.okhttp.status
 
 private const val FieldUser = "user"
 
@@ -91,15 +91,15 @@ object PicaProfileRepository {
         get() = flow {
             val response = PicaRepository.get(ProfileApiPath)
 
-            val result = when (response.code) {
-                RequestSuccess -> {
+            val result = when (response.status) {
+                is ResponseStatus.Success -> {
                     response.deserialize<ResponseBody>()
                         ?.data
                         ?.user
                         ?.let(::asSuccessState)
                         ?: Error.InvalidResponse
                 }
-                RequestUnauthorized -> {
+                is ResponseStatus.Unauthorized -> {
                     Error.Unauthorized
                 }
                 else -> {

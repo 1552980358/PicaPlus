@@ -5,8 +5,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.repository.pica.PicaRepositoryErrorResponse
-import me.ks.chan.pica.plus.util.okhttp.RequestSuccess
+import me.ks.chan.pica.plus.util.okhttp.ResponseStatus
 import me.ks.chan.pica.plus.util.okhttp.deserialize
+import me.ks.chan.pica.plus.util.okhttp.status
 
 private const val RequestFieldUsername = "email"
 private const val RequestFieldPassword = "password"
@@ -72,8 +73,8 @@ class PicaRegisterRepository(
         )
         val response = PicaRepository.post(RegisterApiPath, requestBody)
 
-        val result = when (response.code) {
-            RequestSuccess -> {
+        val result = when (response.status) {
+            is ResponseStatus.Success -> {
                 PicaRegisterRepositoryResult.Success
             }
             // RequestBadRequest -> {
