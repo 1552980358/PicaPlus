@@ -10,6 +10,7 @@ androidx-navigation = "2.7.7"
 androidx-junit = "1.1.5"
 androidx-lifecycle = "2.7.0"
 kotlin = "2.0.0"
+kotlinx-datetime = "0.6.0"
 kotlinx-coroutines = "1.8.1"
 kotlinx-serialization = "1.6.3"
 okhttp = "4.12.0"
@@ -36,6 +37,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }
 google-protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
 jetbrains-kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
+jetbrains-kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
 jetbrains-kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 squareup-okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 io-coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref="coil" }

@@ -103,6 +103,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.google.protobuf.kotlin.lite)
     implementation(libs.jetbrains.kotlin.reflect)
+    implementation(libs.jetbrains.kotlinx.datetime)
     implementation(libs.jetbrains.kotlinx.serialization.json)
     implementation(libs.squareup.okhttp)
     implementation(libs.io.coil.compose)
