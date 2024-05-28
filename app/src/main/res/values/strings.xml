@@ -77,4 +77,34 @@
 
     <string name="screen_category_top_bar_title">Category</string>
 
+    <string name="screen_comic_top_bar_title">Comic</string>
+    <string name="screen_comic_tab_detail_label">Detail</string>
+    <string name="screen_comic_tab_episode_label">Episode</string>
+    <string name="screen_comic_bottom_bar_action_like">Like</string>
+    <string name="screen_comic_bottom_bar_action_favourite">Favourite</string>
+    <string name="screen_comic_bottom_bar_fab_read">Read</string>
+    <string name="screen_comic_detail_top_bar_action_comment">Comment</string>
+    <string name="screen_comic_detail_snackbar_error_network">Network error</string>
+    <string name="screen_comic_detail_snackbar_error_review">Comic is being reviewed</string>
+    <string name="screen_comic_detail_snackbar_error_invalid_response">Invalid response</string>
+    <string name="screen_comic_detail_snackbar_error_unknown_status">Unknown status</string>
+    <string name="screen_comic_detail_snackbar_error_unknown">Unknown error</string>
+    <string name="screen_comic_detail_uploader_button_content_expand">Expand content</string>
+    <string name="screen_comic_detail_uploader_button_content_collapse">Collapse content</string>
+    <string name="screen_comic_detail_uploader_slogan_title">Slogan</string>
+    <string name="screen_comic_detail_uploader_level_title">Level</string>
+    <string name="screen_comic_detail_uploader_gender_title">Gender</string>
+    <string name="screen_comic_detail_uploader_gender_gentleman">Gentleman</string>
+    <string name="screen_comic_detail_uploader_gender_lady">Lady</string>
+    <string name="screen_comic_detail_uploader_gender_bot">Bot</string>
+    <string name="screen_comic_detail_uploader_title_title">Title</string>
+    <string name="screen_comic_detail_uploader_role_title">Title</string>
+    <string name="screen_comic_detail_category_title">Category</string>
+    <string name="screen_comic_detail_tag_title">Tag</string>
+    <string name="screen_comic_episode_snackbar_error_network">Network error</string>
+    <string name="screen_comic_episode_snackbar_error_invalid_response">Invalid response</string>
+    <string name="screen_comic_episode_snackbar_error_invalid_status">Invalid status</string>
+    <string name="screen_comic_episode_snackbar_error_invalid_result">Invalid repository result</string>
+    <string name="screen_comic_episode_snackbar_error_unknown">Unknown error</string>
+
 </resources>
