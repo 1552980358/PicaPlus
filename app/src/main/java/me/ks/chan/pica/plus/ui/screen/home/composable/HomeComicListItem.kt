@@ -62,23 +62,10 @@ import me.ks.chan.pica.plus.util.compose.FalseState
 
 @Composable
 fun LazyItemScope.HomeComicListItem(
-    comic: HomeComicModel
+    comic: HomeComicModel,
+    onClick: (String) -> Unit,
 ) {
     var dropDownMenu by remember(::FalseState)
-
-    val supportingContent: (@Composable () -> Unit)? = when {
-        comic.author.isNullOrBlank() -> { null }
-        else -> {
-            @Composable {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = comic.author,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-        }
-    }
 
     @OptIn(ExperimentalFoundationApi::class)
     ListItem(
@@ -103,12 +90,14 @@ fun LazyItemScope.HomeComicListItem(
             )
         },
         supportingContent = {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = comic.author,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
+            if (!comic.author.isNullOrBlank()) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = comic.author,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         },
         trailingContent = {
             IconButton(onClick = { dropDownMenu = true }) {
@@ -424,7 +413,8 @@ private fun Preview() {
                     serializing = true,
                     views = 100000,
                     likes = 1000,
-                )
+                ),
+                onClick = {},
             )
         }
     }
