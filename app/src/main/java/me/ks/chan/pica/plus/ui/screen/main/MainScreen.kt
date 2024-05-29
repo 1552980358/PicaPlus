@@ -3,9 +3,13 @@ package me.ks.chan.pica.plus.ui.screen.main
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.Scaffold
@@ -31,7 +35,7 @@ import me.ks.chan.pica.plus.ui.screen.home.HomePreview
 import me.ks.chan.pica.plus.ui.screen.home.HomeScreen
 import me.ks.chan.pica.plus.ui.screen.main.composable.MainNavigationItem
 import me.ks.chan.pica.plus.ui.screen.main.model.MainNavigation
-import me.ks.chan.pica.plus.ui.theme.Duration_Medium4
+import me.ks.chan.pica.plus.ui.theme.Duration_Short4
 import me.ks.chan.pica.plus.util.compose.FalseState
 
 const val Main = "main"
@@ -52,41 +56,59 @@ fun MainScreen() {
     }
 }
 
-private const val BottomBar = "BottomBar"
-
 @Composable
 private fun MainContent(
     navController: NavHostController,
     startDestination: String = Home,
     navGraphBuilder: NavGraphBuilder.() -> Unit,
 ) {
-    var navigationBarSlideUp by remember(::FalseState)
-
-    LaunchedEffect(key1 = Unit) {
-        navigationBarSlideUp = true
-    }
-
     Scaffold(
         bottomBar = {
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            var navigationBar by remember(::FalseState)
+            LaunchedEffect(key1 = Unit) {
+                navigationBar = true
+            }
 
-            AnimatedVisibility(
-                visible = navigationBarSlideUp,
-                enter = slideInVertically(
-                    initialOffsetY = { it },
-                    animationSpec = tween(durationMillis = Duration_Medium4),
-                ),
-                label = BottomBar,
-            ) {
-                NavigationBar {
-                    MainNavigation.entries
-                        .forEach { mainNavigation ->
-                            MainNavigationItem(
-                                mainNavigation = mainNavigation,
-                                navController = navController,
-                                navBackStackEntry = navBackStackEntry,
-                            )
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+            LaunchedEffect(key1 = currentRoute) {
+                if (currentRoute != null) {
+                    navigationBar = when (currentRoute) {
+                        Home, Category -> true
+                        else -> false
+                    }
+                }
+            }
+
+            AnimatedContent(
+                targetState = navigationBar,
+                transitionSpec = {
+                    slideInVertically(
+                        initialOffsetY = { it },
+                        animationSpec = tween(durationMillis = Duration_Short4),
+                    ) togetherWith slideOutVertically(
+                        targetOffsetY = { it },
+                        animationSpec = tween(durationMillis = Duration_Short4),
+                    )
+                },
+                label = "MainScreen.BottomBar.AppBar.VisibilityTransition",
+            ) { showNavigationBar ->
+                when {
+                    showNavigationBar -> {
+                        NavigationBar {
+                            MainNavigation.entries
+                                .forEach { mainNavigation ->
+                                    MainNavigationItem(
+                                        mainNavigation = mainNavigation,
+                                        navController = navController,
+                                        currentRoute = currentRoute,
+                                    )
+                                }
                         }
+                    }
+                    else -> {
+                        Box(modifier = Modifier.fillMaxWidth())
+                    }
                 }
             }
         }

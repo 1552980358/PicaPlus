@@ -6,7 +6,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import me.ks.chan.pica.plus.ui.composable.scaffold.LocalScaffoldDispatcher
@@ -16,9 +15,8 @@ import me.ks.chan.pica.plus.ui.screen.main.model.MainNavigation
 fun RowScope.MainNavigationItem(
     mainNavigation: MainNavigation,
     navController: NavHostController,
-    navBackStackEntry: NavBackStackEntry?,
-    selected: Boolean =
-        navBackStackEntry?.destination?.route == mainNavigation.route,
+    currentRoute: String?,
+    selected: Boolean = currentRoute == mainNavigation.route,
 ) {
     val scaffoldDispatcher = LocalScaffoldDispatcher.current
 
