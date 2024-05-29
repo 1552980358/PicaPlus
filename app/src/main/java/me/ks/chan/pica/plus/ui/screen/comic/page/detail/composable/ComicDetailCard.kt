@@ -51,6 +51,9 @@ import me.ks.chan.pica.plus.ui.theme.Duration_Short4
 import me.ks.chan.pica.plus.ui.theme.Spacing_12
 import me.ks.chan.pica.plus.ui.theme.Spacing_16
 import me.ks.chan.pica.plus.ui.theme.Spacing_4
+import me.ks.chan.pica.plus.util.androidx.compose.FullSize
+import me.ks.chan.pica.plus.util.androidx.compose.HalfSize
+import me.ks.chan.pica.plus.util.androidx.compose.TwoThirdSize
 import me.ks.chan.pica.plus.util.coil.rememberImageRequestRetryHelper
 import me.ks.chan.pica.plus.util.coil.retryWith
 import me.ks.chan.pica.plus.util.kotlin.Blank
@@ -130,7 +133,7 @@ fun ComicDetailCard(comic: ComicModel?) {
 
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(fraction = TwoThirdSize)
                         .shimmer(
                             loading = comic?.author == null,
                             paddings = PaddingValues(top = Spacing_4)
@@ -146,11 +149,12 @@ fun ComicDetailCard(comic: ComicModel?) {
 
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = Spacing_4),
+                        .padding(top = Spacing_4)
+                        .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
+                        modifier = Modifier.shimmer(loading = comic == null),
                         imageVector = Visibility,
                         contentDescription = stringResource(
                             id = R.string.screen_home_comic_menu_item_views
@@ -159,9 +163,12 @@ fun ComicDetailCard(comic: ComicModel?) {
 
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .shimmer(loading = comic == null)
-                            .padding(horizontal = Spacing_4),
+                            .padding(horizontal = Spacing_4)
+                            .fillMaxWidth(fraction = when {
+                                comic == null -> HalfSize
+                                else -> FullSize
+                            })
+                            .shimmer(loading = comic == null),
                     ) {
                         Text(
                             text = comic?.views.toString()
@@ -171,10 +178,12 @@ fun ComicDetailCard(comic: ComicModel?) {
 
                 Row(
                     modifier = Modifier
+                        .padding(top = Spacing_4)
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
+                        modifier = Modifier.shimmer(loading = comic == null),
                         imageVector = Heart,
                         contentDescription = stringResource(
                             id = R.string.screen_home_comic_menu_item_likes
@@ -183,9 +192,12 @@ fun ComicDetailCard(comic: ComicModel?) {
 
                     Box(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .shimmer(loading = comic == null)
-                            .padding(horizontal = Spacing_4),
+                            .padding(horizontal = Spacing_4)
+                            .fillMaxWidth(fraction = when {
+                                comic == null -> HalfSize
+                                else -> FullSize
+                            })
+                            .shimmer(loading = comic == null),
                     ) {
                         Text(
                             text = comic?.likes.toString()
