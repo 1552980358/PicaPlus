@@ -87,13 +87,12 @@ private fun NavGraphBuilder.comic(navController: NavHostController) {
         val comic = navController.comicArgument
         if (comic != null) {
             ComicScreen(
-                comic = comic
+                comic = comic,
+                exit = navController::popBackStack,
             )
         }
-        BackHandler {
-            navController.popBackStack(
-                route = ComicNav, inclusive = false,
-            )
-        }
+        BackHandler(
+            onBack = navController::popBackStack
+        )
     }
 }

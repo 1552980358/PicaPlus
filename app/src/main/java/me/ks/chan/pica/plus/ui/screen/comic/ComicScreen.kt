@@ -56,6 +56,7 @@ import me.ks.chan.pica.plus.util.androidx.compose.ZeroState
 @Composable
 fun ComicScreen(
     comic: String,
+    exit: () -> Unit,
 ) {
     val viewModel = comicViewModel(comic = comic)
 
@@ -67,6 +68,7 @@ fun ComicScreen(
         episodeState = episodeState,
         collectDetailRepository = viewModel::collectDetailRepository,
         collectEpisodeRepository = viewModel::collectEpisodeRepository,
+        exit = exit,
     )
 }
 
@@ -76,6 +78,7 @@ private fun ComicContent(
     episodeState: ComicEpisodeState,
     collectDetailRepository: () -> Unit,
     collectEpisodeRepository: () -> Unit,
+    exit: () -> Unit,
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -102,6 +105,7 @@ private fun ComicContent(
                 state = detailState,
                 selectedTabIndex = selectedTabIndex,
                 updateSelectedTabIndex = { selectedTabIndex = it },
+                exit = exit,
             )
         },
         bottomBar = { ComicBottomAppBar(state = detailState) },
@@ -149,12 +153,13 @@ private fun ComicTopBars(
     state: ComicDetailState,
     selectedTabIndex: Int,
     updateSelectedTabIndex: (Int) -> Unit,
+    exit: () -> Unit,
 ) {
     Column {
         @OptIn(ExperimentalMaterial3Api::class)
         TopAppBar(
             navigationIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = exit) {
                     Icon(
                         imageVector = ArrowBack,
                         contentDescription = stringResource(
@@ -290,5 +295,6 @@ fun ComicPreview() {
         ),
         collectDetailRepository = {},
         collectEpisodeRepository = {},
+        exit = {},
     )
 }
