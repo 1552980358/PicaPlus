@@ -43,13 +43,18 @@ const val Home = "home"
 const val Category = "category"
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navigateToComic: (String) -> Unit,
+) {
     val navController = rememberNavController()
 
     MainContent(navController = navController) {
         composable(route = Home) {
-            HomeScreen()
+            HomeScreen(
+                navigateToComic = navigateToComic,
+            )
         }
+
         composable(route = Category) {
             CategoryScreen()
         }

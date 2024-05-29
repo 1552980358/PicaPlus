@@ -9,6 +9,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,15 +26,18 @@ import androidx.navigation.compose.rememberNavController
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.ui.activity.main.viewmodel.MainState
 import me.ks.chan.pica.plus.ui.nav.Greeting
-import me.ks.chan.pica.plus.ui.nav.Guest
 import me.ks.chan.pica.plus.ui.nav.GuestNav
+import me.ks.chan.pica.plus.ui.nav.comicNav
 import me.ks.chan.pica.plus.ui.nav.guestNav
 import me.ks.chan.pica.plus.ui.nav.guestNavPreview
+import me.ks.chan.pica.plus.ui.nav.navigateToComic
 import me.ks.chan.pica.plus.ui.screen.main.Main
 import me.ks.chan.pica.plus.ui.screen.main.MainPreview
 import me.ks.chan.pica.plus.ui.screen.main.MainScreen
 import me.ks.chan.pica.plus.ui.theme.Duration_Long2
+import me.ks.chan.pica.plus.ui.theme.FadingAlpha
 import me.ks.chan.pica.plus.ui.theme.PicaPlusTheme
+import me.ks.chan.pica.plus.ui.theme.Scaling
 
 class MainActivity : ComponentActivity() {
 
@@ -77,20 +83,43 @@ private fun MainContent(
 
     PicaPlusTheme {
         MainContent(navController = navController) {
-            guestNav(navController)
+            guestNav(navController = navController)
 
             composable(
                 route = Main,
                 enterTransition = {
-                    fadeIn(
+                    scaleIn(
                         animationSpec = tween(
                             durationMillis = Duration_Long2
-                        )
+                        ),
+                        initialScale = Scaling,
+                    ) + fadeIn(
+                        animationSpec = tween(
+                            durationMillis = Duration_Long2
+                        ),
+                        initialAlpha = FadingAlpha,
+                    )
+                },
+                exitTransition = {
+                    scaleOut(
+                        animationSpec = tween(
+                            durationMillis = Duration_Long2
+                        ),
+                        targetScale = Scaling,
+                    ) + fadeOut(
+                        animationSpec = tween(
+                            durationMillis = Duration_Long2
+                        ),
+                        targetAlpha = FadingAlpha,
                     )
                 },
             ) {
-                MainScreen()
+                MainScreen(
+                    navigateToComic = navController::navigateToComic,
+                )
             }
+
+            comicNav(navController = navController)
         }
     }
 }

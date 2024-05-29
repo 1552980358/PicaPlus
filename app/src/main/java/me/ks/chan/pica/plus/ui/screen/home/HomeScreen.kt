@@ -53,7 +53,9 @@ import me.ks.chan.pica.plus.ui.theme.Spacing_8
 import me.ks.chan.pica.plus.util.compose.FillSpace
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navigateToComic: (String) -> Unit,
+) {
     val viewModel = homeViewModel
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -64,10 +66,10 @@ fun HomeScreen() {
         updateState = viewModel::updateState,
         updateComicList = viewModel::updateComicList,
         refreshComicList = viewModel::refreshComicList,
+        navigateToComic = navigateToComic,
     )
 }
 
-private const val HomeComicListLoadingStateAnimation = "HomeComicListLoadingStateAnimation"
 @Composable
 private fun <L> HomeContent(
     state: HomeState,
@@ -75,6 +77,7 @@ private fun <L> HomeContent(
     updateState: (HomeState) -> Unit,
     updateComicList: () -> Unit,
     refreshComicList: () -> Unit,
+    navigateToComic: (String) -> Unit,
 ) where L: List<HomeComicModel>, L: StateObject {
     @OptIn(ExperimentalMaterial3Api::class)
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -114,12 +117,8 @@ private fun <L> HomeContent(
                 updateComicList()
             }
             when (result) {
-                SnackbarResult.ActionPerformed -> {
-                    updateComicList()
-                }
-                else -> {
-                    updateState(HomeState.Pending)
-                }
+                SnackbarResult.ActionPerformed -> { updateComicList() }
+                else -> { updateState(HomeState.Pending) }
             }
         }
     }
@@ -153,7 +152,6 @@ private fun <L> HomeContent(
             SnackbarHost(hostState = snackbarHostState)
         }
     ) { innerPadding ->
-
         AnimatedContent(
             targetState = comicList.isNotEmpty(),
             transitionSpec = {
@@ -193,7 +191,7 @@ private fun <L> HomeContent(
 
                 enterTransition.togetherWith(exitTransition)
             },
-            label = HomeComicListLoadingStateAnimation,
+            label = "HomeScreen.Scaffold.AnimatedContent",
         ) { isComicListNotEmpty ->
             when {
                 isComicListNotEmpty -> {
@@ -204,7 +202,7 @@ private fun <L> HomeContent(
                         contentPadding = innerPadding,
                     ) {
                         items(items = comicList, key = HomeComicModel::id) { comic ->
-                            HomeComicListItem(comic = comic)
+                            HomeComicListItem(comic = comic, onClick = navigateToComic)
                         }
 
                         item {
@@ -254,5 +252,6 @@ fun HomePreview() {
         updateState = {},
         updateComicList = {},
         refreshComicList = {},
+        navigateToComic = {},
     )
 }
