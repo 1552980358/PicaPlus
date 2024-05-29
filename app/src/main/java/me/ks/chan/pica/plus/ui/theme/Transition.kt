@@ -1,6 +1,6 @@
 package me.ks.chan.pica.plus.ui.theme
 
-private const val SlideOffsetDenominator = 8
+private const val SlideOffsetDenominator = 10
 private const val SlideOffsetFraction = SlideOffsetDenominator - 1
 
 val Int.slideOffset: Int

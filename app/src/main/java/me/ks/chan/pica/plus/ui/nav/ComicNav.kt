@@ -1,10 +1,11 @@
 package me.ks.chan.pica.plus.ui.nav
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
@@ -16,6 +17,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import me.ks.chan.pica.plus.ui.screen.comic.ComicScreen
 import me.ks.chan.pica.plus.ui.theme.Duration_Long2
+import me.ks.chan.pica.plus.ui.theme.FadingAlpha
 import me.ks.chan.pica.plus.ui.theme.slideOffset
 import me.ks.chan.pica.plus.util.androidx.navigation.args
 
@@ -40,25 +42,24 @@ fun NavGraphBuilder.comicNav(navController: NavHostController) {
             navArgument(ComicId) { type = NavType.StringType },
         ),
         enterTransition = {
-            slideIntoContainer(
-                towards = SlideDirection.Up,
+            slideInVertically(
                 animationSpec = tween(
                     durationMillis = Duration_Long2,
                 ),
-                initialOffset = { it.slideOffset },
+                initialOffsetY = { it.slideOffset },
             ) + fadeIn(
                 animationSpec = tween(
                     durationMillis = Duration_Long2,
-                )
+                ),
+                initialAlpha = FadingAlpha,
             )
         },
         exitTransition = {
-            slideOutOfContainer(
-                towards = SlideDirection.Down,
+            slideOutVertically(
                 animationSpec = tween(
                     durationMillis = Duration_Long2,
                 ),
-                targetOffset = { it.slideOffset },
+                targetOffsetY = { it.slideOffset },
             ) + fadeOut(
                 animationSpec = tween(
                     durationMillis = Duration_Long2,
