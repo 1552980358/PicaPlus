@@ -26,7 +26,6 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -59,6 +58,8 @@ import me.ks.chan.pica.plus.ui.theme.Duration_Medium2
 import me.ks.chan.pica.plus.ui.theme.Duration_Short4
 import me.ks.chan.pica.plus.ui.theme.Sizing_56
 import me.ks.chan.pica.plus.util.androidx.compose.FalseState
+import me.ks.chan.pica.plus.util.coil.rememberImageRequestRetryHelper
+import me.ks.chan.pica.plus.util.coil.retryWith
 
 @Composable
 fun LazyItemScope.HomeComicListItem(
@@ -118,13 +119,12 @@ fun LazyItemScope.HomeComicListItem(
     )
 }
 
-private const val RetryHash = "retry_hash"
 @Composable
 private fun ComicThumbImage(
     title: String,
     thumb: String,
 ) {
-    var retryHash by remember { mutableIntStateOf(0) }
+    val imageRequestRetryHelper = rememberImageRequestRetryHelper()
 
     SubcomposeAsyncImage(
         modifier = Modifier
@@ -132,8 +132,7 @@ private fun ComicThumbImage(
             .clip(RoundedCornerShape(size = Corner_12)),
         model = ImageRequest.Builder(LocalContext.current)
             .data(thumb)
-            // https://github.com/coil-kt/coil/issues/884#issuecomment-975932886
-            .setParameter(RetryHash, retryHash)
+            .retryWith(imageRequestRetryHelper = imageRequestRetryHelper)
             .crossfade(durationMillis = Duration_Short4)
             .build(),
         contentScale = ContentScale.Crop,
@@ -146,7 +145,7 @@ private fun ComicThumbImage(
             )
         },
         error = {
-            IconButton(onClick = { retryHash++ }) {
+            IconButton(onClick = imageRequestRetryHelper::retry) {
                 Icon(
                     imageVector = Refresh,
                     contentDescription = stringResource(
