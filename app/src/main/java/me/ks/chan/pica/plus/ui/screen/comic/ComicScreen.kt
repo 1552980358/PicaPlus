@@ -16,11 +16,12 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -186,7 +187,8 @@ private fun ComicTopBars(
                 initialOffsetY = { -it },
             ),
         ) {
-            TabRow(selectedTabIndex = selectedTabIndex) {
+            @OptIn(ExperimentalMaterial3Api::class)
+            PrimaryTabRow(selectedTabIndex = selectedTabIndex) {
                 ComicTab.entries.forEachIndexed { index, comicPage ->
                     val selected = selectedTabIndex == index
                     Tab(
@@ -200,7 +202,12 @@ private fun ComicTopBars(
                                 },
                                 contentDescription = stringResource(id = comicPage.labelResId)
                             )
-                        }
+                        },
+                        text = {
+                            Text(text = stringResource(id = comicPage.labelResId))
+                        },
+                        // https://m3.material.io/components/tabs/specs#e05d096a-d9e8-44c7-a1c3-6339c2a506cf
+                        unselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
