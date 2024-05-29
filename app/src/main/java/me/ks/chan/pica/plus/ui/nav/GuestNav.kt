@@ -19,7 +19,7 @@ import me.ks.chan.pica.plus.ui.screen.sign_in.SignInPreview
 import me.ks.chan.pica.plus.ui.screen.sign_in.SignInScreen
 import me.ks.chan.pica.plus.ui.theme.Duration_Long2
 
-const val Guest = "guest"
+const val GuestNav = "guest_nav"
 const val SignIn = "sign_in"
 const val Register = "register"
 const val Greeting = "greeting"
@@ -27,7 +27,7 @@ const val Greeting = "greeting"
 private const val SlideOffsetDivider = 8
 
 fun NavGraphBuilder.guestNav(navController: NavHostController) {
-    navigation(route = Guest, startDestination = SignIn) {
+    navigation(route = GuestNav, startDestination = SignIn) {
         composable(
             route = SignIn,
             enterTransition = {
@@ -129,7 +129,7 @@ fun NavGraphBuilder.guestNav(navController: NavHostController) {
             GreetingScreen(
                 onSuccess = {
                     navController.navigate(Main) {
-                        popUpTo(Guest) {
+                        popUpTo(GuestNav) {
                             inclusive = true
                         }
                     }
@@ -149,7 +149,7 @@ fun NavGraphBuilder.guestNav(navController: NavHostController) {
 fun NavGraphBuilder.guestNavPreview(
     navController: NavHostController
 ) {
-    navigation(route = Guest, startDestination = SignIn) {
+    navigation(route = GuestNav, startDestination = SignIn) {
         composable(route = SignIn) {
             SignInPreview(
                 onSignInSuccess = { navController.navigate(Greeting) },

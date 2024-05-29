@@ -24,6 +24,7 @@ import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.ui.activity.main.viewmodel.MainState
 import me.ks.chan.pica.plus.ui.nav.Greeting
 import me.ks.chan.pica.plus.ui.nav.Guest
+import me.ks.chan.pica.plus.ui.nav.GuestNav
 import me.ks.chan.pica.plus.ui.nav.guestNav
 import me.ks.chan.pica.plus.ui.nav.guestNavPreview
 import me.ks.chan.pica.plus.ui.screen.main.Main
@@ -97,7 +98,7 @@ private fun MainContent(
 @Composable
 private fun MainContent(
     navController: NavHostController,
-    startDestination: String = Guest,
+    startDestination: String = GuestNav,
     navGraphBuilder: NavGraphBuilder.() -> Unit,
 ) {
     NavHost(
