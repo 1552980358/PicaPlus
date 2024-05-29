@@ -50,7 +50,7 @@ import me.ks.chan.pica.plus.ui.screen.home.viewmodel.HomeState
 import me.ks.chan.pica.plus.ui.theme.Duration_ExtraLong4
 import me.ks.chan.pica.plus.ui.theme.Duration_Long2
 import me.ks.chan.pica.plus.ui.theme.Spacing_8
-import me.ks.chan.pica.plus.util.compose.FillSpace
+import me.ks.chan.pica.plus.util.androidx.compose.FillSpace
 
 @Composable
 fun HomeScreen(

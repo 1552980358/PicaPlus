@@ -30,7 +30,7 @@ import me.ks.chan.pica.plus.ui.icon.round.VisibilityOff
 import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInFields
 import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInState
 import me.ks.chan.pica.plus.ui.theme.Spacing_8
-import me.ks.chan.pica.plus.util.compose.FalseState
+import me.ks.chan.pica.plus.util.androidx.compose.FalseState
 import me.ks.chan.pica.plus.util.kotlinx.coroutine.defaultJob
 
 @Composable

@@ -1,4 +1,4 @@
-package me.ks.chan.pica.plus.util.compose
+package me.ks.chan.pica.plus.util.androidx.compose
 
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.MutableState

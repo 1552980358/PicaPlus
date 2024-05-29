@@ -58,7 +58,7 @@ import me.ks.chan.pica.plus.ui.theme.Corner_12
 import me.ks.chan.pica.plus.ui.theme.Duration_Medium2
 import me.ks.chan.pica.plus.ui.theme.Duration_Short4
 import me.ks.chan.pica.plus.ui.theme.Sizing_56
-import me.ks.chan.pica.plus.util.compose.FalseState
+import me.ks.chan.pica.plus.util.androidx.compose.FalseState
 
 @Composable
 fun LazyItemScope.HomeComicListItem(

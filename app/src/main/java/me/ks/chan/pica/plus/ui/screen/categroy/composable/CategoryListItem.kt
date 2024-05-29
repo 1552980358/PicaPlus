@@ -26,8 +26,8 @@ import me.ks.chan.pica.plus.ui.icon.round.Refresh
 import me.ks.chan.pica.plus.ui.screen.categroy.viewmodel.CategoryModel
 import me.ks.chan.pica.plus.ui.theme.Corner_12
 import me.ks.chan.pica.plus.ui.theme.Sizing_56
-import me.ks.chan.pica.plus.util.compose.FalseState
-import me.ks.chan.pica.plus.util.compose.TrueState
+import me.ks.chan.pica.plus.util.androidx.compose.FalseState
+import me.ks.chan.pica.plus.util.androidx.compose.TrueState
 
 @Composable
 fun CategoryListItem(

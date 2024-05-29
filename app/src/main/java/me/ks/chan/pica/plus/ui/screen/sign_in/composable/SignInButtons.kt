@@ -27,7 +27,7 @@ import me.ks.chan.pica.plus.ui.icon.round.Done
 import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInFields
 import me.ks.chan.pica.plus.ui.screen.sign_in.viewmodel.SignInState
 import me.ks.chan.pica.plus.ui.theme.Icon_24
-import me.ks.chan.pica.plus.util.compose.FillSpace
+import me.ks.chan.pica.plus.util.androidx.compose.FillSpace
 import me.ks.chan.pica.plus.util.kotlinx.coroutine.defaultJob
 
 private const val ButtonLoadingAnimation = "Loading"

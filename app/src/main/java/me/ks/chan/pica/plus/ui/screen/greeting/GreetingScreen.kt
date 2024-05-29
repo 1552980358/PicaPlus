@@ -27,7 +27,7 @@ import me.ks.chan.pica.plus.ui.screen.greeting.composable.GreetingErrorDialog
 import me.ks.chan.pica.plus.ui.screen.greeting.viewmodel.GreetingState
 import me.ks.chan.pica.plus.ui.theme.Avatar_48
 import me.ks.chan.pica.plus.ui.theme.Spacing_8
-import me.ks.chan.pica.plus.util.compose.HalfSize
+import me.ks.chan.pica.plus.util.androidx.compose.HalfSize
 import me.ks.chan.pica.plus.util.kotlin.Blank
 
 @Composable

@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import me.ks.chan.pica.plus.ui.icon.round.Password
 import me.ks.chan.pica.plus.ui.icon.round.Visibility
 import me.ks.chan.pica.plus.ui.icon.round.VisibilityOff
-import me.ks.chan.pica.plus.util.compose.FalseState
+import me.ks.chan.pica.plus.util.androidx.compose.FalseState
 
 private const val PasswordCrossFade = "password"
 

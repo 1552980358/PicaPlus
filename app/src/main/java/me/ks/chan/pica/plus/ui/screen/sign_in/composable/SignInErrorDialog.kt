@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import me.ks.chan.pica.plus.R
-import me.ks.chan.pica.plus.util.compose.TrueState
+import me.ks.chan.pica.plus.util.androidx.compose.TrueState
 
 @Composable
 fun SignInErrorDialog(

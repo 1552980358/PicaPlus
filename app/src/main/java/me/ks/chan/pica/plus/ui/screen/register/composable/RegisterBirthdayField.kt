@@ -26,7 +26,7 @@ import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.ui.icon.round.Cake
 import me.ks.chan.pica.plus.ui.screen.register.viewmodel.RegisterFields
 import me.ks.chan.pica.plus.ui.screen.register.viewmodel.RegisterState
-import me.ks.chan.pica.plus.util.compose.FalseState
+import me.ks.chan.pica.plus.util.androidx.compose.FalseState
 import me.ks.chan.pica.plus.util.kotlin.Blank
 import java.text.SimpleDateFormat
 import java.util.Locale

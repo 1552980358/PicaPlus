@@ -36,7 +36,7 @@ import me.ks.chan.pica.plus.ui.screen.home.HomeScreen
 import me.ks.chan.pica.plus.ui.screen.main.composable.MainNavigationItem
 import me.ks.chan.pica.plus.ui.screen.main.model.MainNavigation
 import me.ks.chan.pica.plus.ui.theme.Duration_Short4
-import me.ks.chan.pica.plus.util.compose.FalseState
+import me.ks.chan.pica.plus.util.androidx.compose.FalseState
 
 const val Main = "main"
 const val Home = "home"

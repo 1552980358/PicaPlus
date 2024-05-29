@@ -51,7 +51,7 @@ import me.ks.chan.pica.plus.ui.screen.comic.viewmodel.ComicUploaderGenderModel
 import me.ks.chan.pica.plus.ui.screen.comic.viewmodel.ComicUploaderModel
 import me.ks.chan.pica.plus.ui.theme.Duration_Long2
 import me.ks.chan.pica.plus.ui.theme.Duration_Medium4
-import me.ks.chan.pica.plus.util.compose.ZeroState
+import me.ks.chan.pica.plus.util.androidx.compose.ZeroState
 
 @Composable
 fun ComicScreen(

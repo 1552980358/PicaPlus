@@ -62,7 +62,7 @@ import me.ks.chan.pica.plus.ui.theme.Spacing_4
 import me.ks.chan.pica.plus.ui.theme.Spacing_8
 import me.ks.chan.pica.plus.util.coil.rememberImageRequestRetryHelper
 import me.ks.chan.pica.plus.util.coil.retryWith
-import me.ks.chan.pica.plus.util.compose.FalseState
+import me.ks.chan.pica.plus.util.androidx.compose.FalseState
 import me.ks.chan.pica.plus.util.kotlin.Blank
 
 @Composable

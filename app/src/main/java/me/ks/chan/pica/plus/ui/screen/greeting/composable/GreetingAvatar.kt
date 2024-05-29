@@ -17,8 +17,8 @@ import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.ui.composable.shimmer.shimmer
 import me.ks.chan.pica.plus.ui.icon.filled.Person
 import me.ks.chan.pica.plus.ui.theme.Avatar_48
-import me.ks.chan.pica.plus.util.compose.FalseState
-import me.ks.chan.pica.plus.util.compose.TrueState
+import me.ks.chan.pica.plus.util.androidx.compose.FalseState
+import me.ks.chan.pica.plus.util.androidx.compose.TrueState
 
 @Composable
 fun GreetingAsyncAvatar(
