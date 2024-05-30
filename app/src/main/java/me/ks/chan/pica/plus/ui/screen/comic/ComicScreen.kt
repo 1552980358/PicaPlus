@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,14 +26,14 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import me.ks.chan.pica.plus.R
 import me.ks.chan.pica.plus.repository.pica.PicaComicCategory
@@ -52,7 +53,6 @@ import me.ks.chan.pica.plus.ui.screen.comic.viewmodel.ComicUploaderGenderModel
 import me.ks.chan.pica.plus.ui.screen.comic.viewmodel.ComicUploaderModel
 import me.ks.chan.pica.plus.ui.theme.Duration_Long2
 import me.ks.chan.pica.plus.ui.theme.Duration_Medium4
-import me.ks.chan.pica.plus.util.androidx.compose.ZeroState
 
 @Composable
 fun ComicScreen(
@@ -83,29 +83,15 @@ private fun ComicContent(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
 
-    var selectedTabIndex by remember(::ZeroState)
     @OptIn(ExperimentalFoundationApi::class)
     val pagerState = rememberPagerState { ComicTab.entries.size }
 
-    LaunchedEffect(key1 = selectedTabIndex) {
-        @OptIn(ExperimentalFoundationApi::class)
-        if (pagerState.currentPage != selectedTabIndex) {
-            pagerState.animateScrollToPage(selectedTabIndex)
-        }
-    }
-    @OptIn(ExperimentalFoundationApi::class)
-    LaunchedEffect(key1 = pagerState.currentPage) {
-        if (selectedTabIndex != pagerState.currentPage) {
-            selectedTabIndex = pagerState.currentPage
-        }
-    }
-
     Scaffold(
         topBar = {
+            @OptIn(ExperimentalFoundationApi::class)
             ComicTopBars(
                 state = detailState,
-                selectedTabIndex = selectedTabIndex,
-                updateSelectedTabIndex = { selectedTabIndex = it },
+                pagerState = pagerState,
                 exit = exit,
             )
         },
@@ -152,8 +138,8 @@ private fun ComicContent(
 @Composable
 private fun ComicTopBars(
     state: ComicDetailState,
-    selectedTabIndex: Int,
-    updateSelectedTabIndex: (Int) -> Unit,
+    @OptIn(ExperimentalFoundationApi::class)
+    pagerState: PagerState,
     exit: () -> Unit,
 ) {
     Column {
@@ -187,13 +173,21 @@ private fun ComicTopBars(
                 initialOffsetY = { -it },
             ),
         ) {
-            @OptIn(ExperimentalMaterial3Api::class)
-            PrimaryTabRow(selectedTabIndex = selectedTabIndex) {
+            val coroutineScope = rememberCoroutineScope()
+
+            @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+            PrimaryTabRow(
+                selectedTabIndex = pagerState.currentPage
+            ) {
                 ComicTab.entries.forEachIndexed { index, comicPage ->
-                    val selected = selectedTabIndex == index
+                    val selected = pagerState.currentPage == index
                     Tab(
                         selected = selected,
-                        onClick = { updateSelectedTabIndex(index) },
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
                         icon = {
                             Icon(
                                 imageVector = when {
