@@ -99,6 +99,7 @@
     <string name="screen_comic_detail_uploader_gender_bot">Bot</string>
     <string name="screen_comic_detail_uploader_title_title">Title</string>
     <string name="screen_comic_detail_uploader_role_title">Title</string>
+    <string name="screen_comic_detail_description_title">Description</string>
     <string name="screen_comic_detail_category_title">Category</string>
     <string name="screen_comic_detail_tag_title">Tag</string>
     <string name="screen_comic_episode_snackbar_error_network">Network error</string>

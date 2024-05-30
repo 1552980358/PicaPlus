@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarDuration
@@ -26,6 +24,7 @@ import me.ks.chan.pica.plus.repository.pica.PicaComicCategory
 import me.ks.chan.pica.plus.ui.composable.scaffold.ProvideTopAppBarActions
 import me.ks.chan.pica.plus.ui.icon.round.Comment
 import me.ks.chan.pica.plus.ui.screen.comic.page.detail.composable.ComicDetailCard
+import me.ks.chan.pica.plus.ui.screen.comic.page.detail.composable.ComicDetailDescription
 import me.ks.chan.pica.plus.ui.screen.comic.page.detail.composable.ComicPropertyListGroup
 import me.ks.chan.pica.plus.ui.screen.comic.page.detail.composable.ComicDetailUploaderCard
 import me.ks.chan.pica.plus.ui.screen.comic.viewmodel.ComicCategoryModel
@@ -90,6 +89,13 @@ fun ComicDetailPage(
         item {
             ComicDetailUploaderCard(
                 uploader = detailState.observe(ComicDetailState.Success::uploader)
+            )
+        }
+
+        item {
+            ComicDetailDescription(
+                description = detailState.observe(ComicDetailState.Success::comic)
+                    ?.description
             )
         }
 
