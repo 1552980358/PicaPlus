@@ -92,11 +92,18 @@ fun ComicDetailPage(
             )
         }
 
-        item {
-            ComicDetailDescription(
-                description = detailState.observe(ComicDetailState.Success::comic)
-                    ?.description
-            )
+        if (
+            detailState is ComicDetailState.Loading ||
+            !detailState.observe(ComicDetailState.Success::comic)
+                ?.description
+                .isNullOrBlank()
+        ) {
+            item {
+                ComicDetailDescription(
+                    description = detailState.observe(ComicDetailState.Success::comic)
+                        ?.description
+                )
+            }
         }
 
         item {
@@ -107,12 +114,17 @@ fun ComicDetailPage(
             )
         }
 
-        item {
-            ComicPropertyListGroup(
-                itemList = detailState.observe(ComicDetailState.Success::comic)?.tagList,
-                titleResId = R.string.screen_comic_detail_tag_title,
-                label = { item -> Text(text = item) },
-            )
+        if (
+            detailState is ComicDetailState.Loading ||
+            detailState.observe(ComicDetailState.Success::comic)?.tagList?.isNotEmpty() == true
+        ) {
+            item {
+                ComicPropertyListGroup(
+                    itemList = detailState.observe(ComicDetailState.Success::comic)?.tagList,
+                    titleResId = R.string.screen_comic_detail_tag_title,
+                    label = { item -> Text(text = item) },
+                )
+            }
         }
     }
 }
