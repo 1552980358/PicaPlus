@@ -94,6 +94,7 @@ fun ComicDetailPage(
 
         if (
             detailState is ComicDetailState.Loading ||
+            detailState is ComicDetailState.Error ||
             !detailState.observe(ComicDetailState.Success::comic)
                 ?.description
                 .isNullOrBlank()
@@ -116,6 +117,7 @@ fun ComicDetailPage(
 
         if (
             detailState is ComicDetailState.Loading ||
+            detailState is ComicDetailState.Error ||
             detailState.observe(ComicDetailState.Success::comic)?.tagList?.isNotEmpty() == true
         ) {
             item {
