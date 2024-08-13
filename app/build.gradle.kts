@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.jetbrains.kotlinx.serialization)
     alias(libs.plugins.jetbrains.compose.compiler)
     alias(libs.plugins.google.ksp)
 }
@@ -70,6 +71,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.jetbrains.kotlinx.serialization)
     implementation(libs.material.symbols.compose.annotation)
     ksp(libs.material.symbols.compose.ksp)
 
