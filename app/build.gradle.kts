@@ -74,6 +74,9 @@ dependencies {
     implementation(libs.jetbrains.kotlinx.serialization)
     implementation(libs.material.symbols.compose.annotation)
     ksp(libs.material.symbols.compose.ksp)
+    api(libs.squareup.okhttp)
+    implementation(libs.squareup.retrofit)
+    implementation(libs.squareup.retrofit.converter.kotlinx.serialization)
 
     testImplementation(libs.junit)
 
