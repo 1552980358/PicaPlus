@@ -4,7 +4,7 @@ kotlin = "2.0.10"
 kotlinx-coroutines = "1.8.1"
 kotlinx-serialization = "1.7.1"
 ksp = "2.0.10-1.0.24"
-material-symbols-compose = "1.0.0-alpha01"
+material-symbols-compose = "1.0.0-beta01"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 
