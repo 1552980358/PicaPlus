@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.jetbrains.kotlinx.coroutines.android)
     implementation(libs.jetbrains.kotlinx.serialization)
     implementation(libs.material.symbols.compose.annotation)
     ksp(libs.material.symbols.compose.ksp)
@@ -79,6 +80,7 @@ dependencies {
     implementation(libs.squareup.retrofit.converter.kotlinx.serialization)
 
     testImplementation(libs.junit)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

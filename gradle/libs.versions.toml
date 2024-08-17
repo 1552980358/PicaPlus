@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.2"
 kotlin = "2.0.10"
+kotlinx-coroutines = "1.8.1"
 kotlinx-serialization = "1.7.1"
 ksp = "2.0.10-1.0.24"
 material-symbols-compose = "1.0.0-alpha01"
@@ -26,6 +27,7 @@ androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graph
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+jetbrains-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 jetbrains-kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 material-symbols-compose-annotation = { group = "com.github.1552980358.material-symbols-compose", name = "annotation", version.ref = "material-symbols-compose" }
 material-symbols-compose-ksp = { group = "com.github.1552980358.material-symbols-compose", name = "ksp", version.ref = "material-symbols-compose" }
@@ -34,6 +36,7 @@ squareup-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", versi
 squareup-retrofit-converter-kotlinx-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+jetbrains-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
