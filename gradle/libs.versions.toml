@@ -45,6 +45,37 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 
+[bundles]
+app = [
+    "androidx-activity-compose",
+    "androidx-compose-material3",
+    "androidx-compose-ui",
+    "androidx-compose-ui-graphics",
+    "androidx-compose-ui-tooling-preview",
+    "androidx-core-ktx",
+    "androidx-lifecycle-runtime-ktx",
+    "jetbrains-kotlinx-coroutines-android",
+    "jetbrains-kotlinx-serialization",
+    "material-symbols-compose-annotation",
+    "squareup-okhttp",
+    "squareup-retrofit",
+    "squareup-retrofit-converter-kotlinx-serialization"
+]
+test = [
+    "junit",
+    "jetbrains-kotlinx-coroutines-test",
+]
+android-test = [
+    "androidx-junit",
+    "androidx-espresso-core",
+    "androidx-ui-tooling",
+]
+debug = [
+    "androidx-ui-tooling",
+    "androidx-ui-test-manifest",
+    "androidx-ui-test-junit4",
+]
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
