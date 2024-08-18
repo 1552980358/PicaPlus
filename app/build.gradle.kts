@@ -65,7 +65,7 @@ android {
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     api(libs.bundles.app)
-    ksp(libs.material.symbols.compose.ksp)
+    ksp(libs.bundles.ksp)
 
     testImplementation(libs.bundles.test)
 
