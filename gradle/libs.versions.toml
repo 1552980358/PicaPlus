@@ -4,6 +4,8 @@ kotlin = "2.0.10"
 kotlinx-coroutines = "1.8.1"
 kotlinx-serialization = "1.7.1"
 ksp = "2.0.10-1.0.24"
+protobuf = "4.27.3"
+protobuf-gradle-plugin = "0.9.4"
 material-symbols-compose = "1.0.0-beta01"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
@@ -11,6 +13,7 @@ retrofit = "2.11.0"
 androidx-core = "1.13.1"
 androidx-activity = "1.9.1"
 androidx-compose = "2024.06.00"
+androidx-datastore = "1.1.1"
 androidx-lifecycle = "2.8.4"
 androidx-navigation = "2.8.0-beta07"
 androidx-room = "2.6.1"
@@ -28,11 +31,14 @@ androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidx-datastore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
+google-protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+google-protobuf-compiler = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 jetbrains-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 jetbrains-kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 material-symbols-compose-annotation = { group = "com.github.1552980358.material-symbols-compose", name = "annotation", version.ref = "material-symbols-compose" }
@@ -59,10 +65,12 @@ app = [
     "androidx-compose-ui-graphics",
     "androidx-compose-ui-tooling-preview",
     "androidx-core-ktx",
+    "androidx-datastore",
     "androidx-lifecycle-runtime-ktx",
     "androidx-navigation-compose",
     "androidx-room-runtime",
     "androidx-room-ktx",
+    "google-protobuf-kotlin-lite",
     "jetbrains-kotlinx-coroutines-android",
     "jetbrains-kotlinx-serialization",
     "material-symbols-compose-annotation",
@@ -95,3 +103,4 @@ jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = 
 jetbrains-kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrains-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+google-protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle-plugin" }
