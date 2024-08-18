@@ -12,6 +12,7 @@ androidx-core = "1.13.1"
 androidx-activity = "1.9.1"
 androidx-compose = "2024.06.00"
 androidx-lifecycle = "2.8.4"
+androidx-navigation = "2.8.0-beta07"
 
 androidx-espresso = "3.6.1"
 androidx-junit = "1.2.1"
@@ -27,6 +28,7 @@ androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graph
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation" }
 jetbrains-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 jetbrains-kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 material-symbols-compose-annotation = { group = "com.github.1552980358.material-symbols-compose", name = "annotation", version.ref = "material-symbols-compose" }
@@ -54,6 +56,7 @@ app = [
     "androidx-compose-ui-tooling-preview",
     "androidx-core-ktx",
     "androidx-lifecycle-runtime-ktx",
+    "androidx-navigation-compose",
     "jetbrains-kotlinx-coroutines-android",
     "jetbrains-kotlinx-serialization",
     "material-symbols-compose-annotation",
