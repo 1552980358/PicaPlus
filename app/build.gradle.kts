@@ -51,6 +51,9 @@ android {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_17
         }
+        sourceSets.all {
+            languageSettings.enableLanguageFeature("ExplicitBackingFields")
+        }
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
