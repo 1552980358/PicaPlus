@@ -12,7 +12,7 @@ retrofit = "2.11.0"
 
 androidx-core = "1.13.1"
 androidx-activity = "1.9.1"
-androidx-compose = "2024.06.00"
+androidx-compose = "2024.08.00"
 androidx-datastore = "1.1.1"
 androidx-lifecycle = "2.8.4"
 androidx-navigation = "2.8.0-beta07"
