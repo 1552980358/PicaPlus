@@ -16,8 +16,16 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 abstract class PicaRepository {
 
     companion object Metadata {
+
         val isAuthorized: Boolean
             get() = Authorization.isAuthorized
+
+        var token: String?
+            // private: Getter visibility must be the same as property visibility
+            @Deprecated("Do not access this property directly, use `isAuthorized` to check.", level = DeprecationLevel.HIDDEN)
+            get() = throw IllegalAccessException("Do not access this property directly, use `isAuthorized` to check.")
+            set(value) { Authorization.token = value }
+
     }
 
     protected val retrofit: Retrofit
@@ -37,6 +45,11 @@ private data object Authorization {
     }
 
     private var state: State = State.Unauthorized
+    var token: String?
+        get() = (state as? State.Authorized)?.token
+        set(value) {
+            state = value?.let(State::Authorized) ?: State.Unauthorized
+        }
 
     val isAuthorized: Boolean
         get() = state is State.Authorized
