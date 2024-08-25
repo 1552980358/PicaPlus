@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">PicaPlus</string>
+
+    <string name="LoginScreen_Appbar_Title">Login</string>
+    <string name="LoginScreen_ExitConfirmDialog_Title">Exit</string>
+    <string name="LoginScreen_ExitConfirmDialog_Content">Exit account login?</string>
+    <string name="LoginScreen_ExitConfirmDialog_ConfirmButton">@string/LoginScreen_ExitConfirmDialog_Title</string>
+    <string name="LoginScreen_ExitConfirmDialog_CancelButton">@android:string/cancel</string>
+    <string name="LoginScreen_GreetingText">Verify your account before continue.</string>
+    <string name="LoginScreen_UsernameTextField_Label">Username</string>
+    <string name="LoginScreen_PasswordTextField_Label">Password</string>
+    <string name="LoginScreen_ForgotButton_Text">Forgot?</string>
+    <string name="LoginScreen_GoButton_Text">GO</string>
+    <string name="LoginScreen_UnofficialText">This is an unofficial client of PicaACG.</string>
+    <string name="LoginScreen_LicenseText">Open source under Apache License 2.0.</string>
+    <string name="LoginScreen_PasswordTextField_LoginFailureSupportingText_InvalidCredentials">Login Error: Invalid account credentials.</string>
+    <string name="LoginScreen_PasswordTextField_LoginFailureSupportingText_Network">Login Error: Encounter network issue.</string>
+    <string name="LoginScreen_PasswordTextField_LoginFailureSupportingText_UnexpectedErrorCode">Login Error: Http Status %d, with unexpected error code %s "%s".</string>
+    <string name="LoginScreen_PasswordTextField_LoginFailureSupportingText_UnknownResponse">Login Error: Http Status %d with unknown response "%s".</string>
+    <string name="LoginScreen_PasswordTextField_LoginFailureSupportingText_UnexpectedException">Login Error: Unexpected exception (%s) encountered.</string>
+
 </resources>
