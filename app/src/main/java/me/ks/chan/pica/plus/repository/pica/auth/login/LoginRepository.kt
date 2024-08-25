@@ -47,13 +47,13 @@ class LoginRepository(
     sealed interface Result {
         data class Success(val token: String): Result
 
-        sealed interface Error: Result {
-            data object InvalidCredentials: Error
-            data class UnknownErrorCode(
+        sealed interface Failure: Result {
+            data object InvalidCredentials: Failure
+            data class UnknownFailureCode(
                 val code: Int, val error: String, val detail: String,
-            ): Error
+            ): Failure
 
-            data class Unknown(val code: Int, val response: String?): Error
+            data class Unknown(val code: Int, val response: String?): Failure
         }
     }
 
@@ -86,33 +86,33 @@ class LoginRepository(
 private fun Response<ResponseBody>.handleSuccessResponse(): Result =
     body()?.data?.token
         ?.let(Result::Success)
-        ?: Result.Error.Unknown(code(), null)
+        ?: Result.Failure.Unknown(code(), null)
 
-private fun Response<ResponseBody>.handleErrorResponse(): Result.Error = let {
+private fun Response<ResponseBody>.handleErrorResponse(): Result.Failure = let {
     val errorResponseBody = errorBody()?.string()
     when {
         errorResponseBody != null -> {
             handleErrorResponseBody(errorResponseBody)
         }
         else -> {
-            Result.Error.Unknown(code(), null)
+            Result.Failure.Unknown(code(), null)
         }
     }
 }
 
 private fun Response<ResponseBody>.handleErrorResponseBody(
     errorBody: String,
-): Result.Error =
+): Result.Failure =
     runCatching { Json.decodeFromString<PicaErrorResponse>(errorBody) }
         .getOrNull()
         ?.let { errorResponse ->
             when (errorResponse.error) {
                 "1002" -> {
-                    Result.Error.InvalidCredentials
+                    Result.Failure.InvalidCredentials
                 }
 
                 else -> {
-                    Result.Error.UnknownErrorCode(
+                    Result.Failure.UnknownFailureCode(
                         code(),
                         errorResponse.error,
                         errorResponse.message
@@ -120,4 +120,4 @@ private fun Response<ResponseBody>.handleErrorResponseBody(
                 }
             }
         }
-        ?: Result.Error.Unknown(code(), errorBody)
+        ?: Result.Failure.Unknown(code(), errorBody)

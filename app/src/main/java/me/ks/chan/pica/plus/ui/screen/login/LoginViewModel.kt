@@ -131,13 +131,13 @@ class LoginViewModel(context: Context): ViewModel() {
                                 // Return login state
                                 LoginState.Success(result.token)
                             }
-                            is LoginRepository.Result.Error.InvalidCredentials -> {
+                            is LoginRepository.Result.Failure.InvalidCredentials -> {
                                 LoginState.Failure.InvalidCredentials
                             }
-                            is LoginRepository.Result.Error.UnknownErrorCode -> {
+                            is LoginRepository.Result.Failure.UnknownFailureCode -> {
                                 LoginState.Failure.UnexpectedErrorCode(result.code, result.error, result.detail)
                             }
-                            is LoginRepository.Result.Error.Unknown -> {
+                            is LoginRepository.Result.Failure.Unknown -> {
                                 LoginState.Failure.UnknownResponse(result.code, result.response)
                             }
                         }
