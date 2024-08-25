@@ -1,3 +1,4 @@
+import com.google.protobuf.gradle.id
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -77,6 +78,7 @@ protobuf {
                 val java by creating {
                     option("lite")
                 }
+                id("kotlin")
             }
         }
     }
