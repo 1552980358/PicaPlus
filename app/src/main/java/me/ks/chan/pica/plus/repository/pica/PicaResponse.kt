@@ -2,6 +2,7 @@ package me.ks.chan.pica.plus.repository.pica
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 
 @Serializable
 abstract class PicaResponse {
@@ -26,3 +27,6 @@ data class PicaErrorResponse(
     @SerialName("detail")
     val detail: String
 ): PicaResponse()
+
+inline val String.tryAsPicaErrorResponse: PicaErrorResponse?
+    get() = runCatching { Json.decodeFromString<PicaErrorResponse>(this) }.getOrNull()
