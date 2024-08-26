@@ -3,12 +3,11 @@ package me.ks.chan.pica.plus.repository.pica.auth.login
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import me.ks.chan.pica.plus.repository.pica.PicaDataResponse
-import me.ks.chan.pica.plus.repository.pica.PicaErrorResponse
 import me.ks.chan.pica.plus.repository.pica.PicaRepository
 import me.ks.chan.pica.plus.repository.pica.auth.login.invoke
-import me.ks.chan.pica.plus.repository.pica.auth.login.LoginRepository.Result
+import me.ks.chan.pica.plus.repository.pica.tryAsPicaErrorResponse
+import me.ks.chan.pica.plus.repository.pica.auth.login.LoginRepository.Result as LoginResult
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -65,7 +64,7 @@ class LoginRepository(
         val response = login(username, password)
         val result = when {
             response.isSuccessful -> { response.handleSuccessResponse() }
-            else -> { response.handleErrorResponse() }
+            else -> { response.handleFailureResponse() }
         }
 
         emit(result)
@@ -73,28 +72,28 @@ class LoginRepository(
 
 }
 
-private fun LoginResponse.handleSuccessResponse(): Result {
+private fun LoginResponse.handleSuccessResponse(): LoginResult {
     return when (val token = body()?.data?.token) {
-        null -> { Result.Failure.Unknown(code(), null) }
-        else -> { Result.Success(token) }
+        null -> { LoginResult.Failure.Unknown(code(), null) }
+        else -> { LoginResult.Success(token) }
     }
 }
 
-private fun LoginResponse.handleErrorResponse(): Result.Failure {
-    return when (val errorResponseBody = errorBody()?.string()) {
-        null -> { Result.Failure.Unknown(code(), null) }
-        else -> { handleErrorResponseBody(errorResponseBody) }
-    }
+private fun LoginResponse.handleFailureResponse(): LoginResult {
+    return (
+        errorBody()?.string()?.handleErrorResponse()
+            ?: LoginResult.Failure.Unknown(code(), null)
+    )
 }
 
-private fun LoginResponse.handleErrorResponseBody(errorBody: String): Result.Failure {
-    val errorResponse = runCatching { Json.decodeFromString<PicaErrorResponse>(errorBody) }
-        .getOrNull()
+context(LoginResponse)
+private fun String.handleErrorResponse(): LoginResult {
+    val errorResponse = tryAsPicaErrorResponse
     return when (errorResponse?.error) {
-        "1002" -> { Result.Failure.InvalidCredentials }
-        null -> { Result.Failure.Unknown(code(), errorBody) }
+        "1002" -> { LoginResult.Failure.InvalidCredentials }
+        null -> { LoginResult.Failure.Unknown(code(), this) }
         else -> {
-            Result.Failure.UnknownFailureCode(
+            LoginResult.Failure.UnknownFailureCode(
                 code(), errorResponse.error, errorResponse.message
             )
         }
