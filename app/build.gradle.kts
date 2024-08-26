@@ -54,6 +54,7 @@ android {
         }
         sourceSets.all {
             languageSettings.enableLanguageFeature("ExplicitBackingFields")
+            languageSettings.enableLanguageFeature("ContextReceivers")
         }
     }
     kotlinOptions {
