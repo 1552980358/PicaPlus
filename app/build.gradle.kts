@@ -86,14 +86,13 @@ protobuf {
 }
 
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    androidTestImplementation(composeBom)
+
     api(libs.bundles.app)
     ksp(libs.bundles.ksp)
-
     testImplementation(libs.bundles.test)
-
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.bundles.android.test)
-
     debugImplementation(libs.bundles.debug)
 }
