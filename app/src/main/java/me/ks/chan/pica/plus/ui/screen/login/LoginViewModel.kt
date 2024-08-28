@@ -107,22 +107,26 @@ class LoginViewModel(context: Context): ViewModel() {
     val loginState: StateFlow<LoginState>
         field = MutableStateFlow<LoginState>(LoginState.Pending)
 
+    private var currentLoginState: LoginState
+        get() = loginState.value
+        set(value) { loginState.value = value }
+
     fun login(coroutineScope: CoroutineScope = viewModelScope) {
-        if (loginState.value != LoginState.Loading) {
-            loginState.value = LoginState.Loading
+        if (currentLoginState != LoginState.Loading) {
+            currentLoginState = LoginState.Loading
 
             coroutineScope.launch {
                 val (username, password) = account.value
 
                 LoginRepository(username, password).flow
                     .catch { throwable: Throwable ->
-                        loginState.value = when (throwable) {
+                        currentLoginState = when (throwable) {
                             is IOException -> LoginState.Failure.Network
                             else -> LoginState.Failure.UnexpectedException(throwable)
                         }
                     }
                     .collect { result: LoginRepository.Result ->
-                        loginState.value = when (result) {
+                        currentLoginState = when (result) {
                             is LoginRepository.Result.Success -> {
                                 // Save the token to the PicaRepository
                                 PicaRepository.token = result.token
