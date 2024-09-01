@@ -17,6 +17,7 @@ class LoginRepositoryTest {
                 .collect { result ->
                     when (result) {
                         is LoginRepository.Result.Success -> {
+                            println(result.token)
                             assert(result.token.isNotEmpty(), result::token)
                         }
                         else -> {
