@@ -5,26 +5,28 @@ import androidx.compose.ui.graphics.Color
 data object ShimmerDefaults {
 
     fun colors(
-        baseColor: Color = Color.Unspecified,
-        shimmerColor: Color = Color.Unspecified,
+        placeholder: Color = Color.Unspecified,
+        shimmer: Color = Color.Unspecified,
     ): ShimmerColors {
         return ShimmerColors(
-            base = baseColor,
-            shimmer = shimmerColor,
+            placeholder = placeholder,
+            shimmer = shimmer,
         )
     }
 
     fun durations(
-        switching: Int = 400,
-        launch: Long = 0,
-        baseColor: Long = 0,
-        shimmerColor: Long = baseColor,
+        startDelay: Long = 0,
+        placeholderLeaving: Int = 400,
+        shimmerLeaving: Int = placeholderLeaving,
+        placeholderAwaiting: Long = 0,
+        shimmerAwaiting: Long = placeholderAwaiting,
     ): ShimmerDurations {
         return ShimmerDurations(
-            switching = switching,
-            launch = launch,
-            base = baseColor,
-            shimmer = shimmerColor,
+            startDelay = startDelay,
+            placeholderLeaving = placeholderLeaving,
+            shimmerLeaving = shimmerLeaving,
+            placeholderAwaiting = placeholderAwaiting,
+            shimmerAwaiting = shimmerAwaiting,
         )
     }
 

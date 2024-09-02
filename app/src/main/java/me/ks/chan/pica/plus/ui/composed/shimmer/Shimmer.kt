@@ -39,8 +39,8 @@ fun Modifier.shimmer(
 
     LaunchedEffect(key1 = enabled) {
         if (enabled) {
-            if (durations.launch > 0) {
-                delay(durations.launch)
+            if (durations.startDelay > 0) {
+                delay(durations.startDelay)
             }
             launchShimmering = true
         }
@@ -53,7 +53,7 @@ fun Modifier.shimmer(
         CornerRadius(with(density) { cornerRadiusDp.toPx() })
     }
 
-    var currentColor = remember { shimmerColors.base }
+    var currentColor = remember { shimmerColors.placeholder }
 
     val color = when {
         enabled.not() && launchShimmering -> {
@@ -73,7 +73,7 @@ fun Modifier.shimmer(
                 easing = easing,
             )
         }
-        enabled /* && launchShimmering.not() */ -> { shimmerColors.base }
+        enabled /* && launchShimmering.not() */ -> { shimmerColors.placeholder }
         else -> { Color.Unspecified }
     }
 
@@ -95,9 +95,9 @@ private fun shimmerFinishingColor(
         val animatable = remember { Animatable(currentColor) }
         LaunchedEffect(key1 = Unit) {
             animatable.animateTo(
-                shimmerColors.base,
+                shimmerColors.placeholder,
                 tween(
-                    durationMillis = shimmerDurations.switching,
+                    durationMillis = shimmerDurations.placeholderLeaving,
                     easing = easing(false),
                 )
             )
@@ -109,7 +109,7 @@ private fun shimmerFinishingColor(
         resetColor -> {
             val animatable = remember { Animatable(currentColor) }
             LaunchedEffect(key1 = Unit) {
-                animatable.animateTo(shimmerColors.base)
+                animatable.animateTo(shimmerColors.placeholder)
                 resetColor = false
             }
             animatable.asState()
@@ -135,11 +135,12 @@ private fun shimmerFinishingColor(
 
             transition.animateColor(
                 transitionSpec = {
-                    tween(durationMillis = shimmerDurations.switching, easing = easing(targetState))
+                    tween(
+                        durationMillis = shimmerDurations.leaving(targetState),
+                        easing = easing(targetState)
+                    )
                 },
-                targetValueByState = { finishing ->
-                    with(shimmerColors) { if (finishing) base else shimmer }
-                },
+                targetValueByState = { finishing -> shimmerColors.color(finishing) },
                 label = "Ui.Shimmer.Finishing",
             )
         }
@@ -160,19 +161,18 @@ private fun shimmerColor(
     val transition = rememberTransition(transitionState = transitionState)
     val color by transition.animateColor(
         transitionSpec = {
-            tween(durationMillis = shimmerDurations.switching, easing = easing(targetState))
+            tween(
+                durationMillis = shimmerDurations.leaving(targetState),
+                easing = easing(targetState),
+            )
         },
-        targetValueByState = { switching ->
-            with(shimmerColors) { if (switching) shimmer else base }
-        },
+        targetValueByState = { targetValue -> shimmerColors.color(targetValue) },
         label = "Ui.Shimmer.Loading",
     )
 
     LaunchedEffect(key1 = transitionState.isIdle) {
         if (transitionState.isIdle) {
-            delay(
-                with (shimmerDurations) { if (transitionState.targetState) shimmer else base }
-            )
+            delay(shimmerDurations.awaiting(transitionState.targetState))
             transitionState.targetState = !transitionState.currentState
         }
     }
