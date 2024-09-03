@@ -91,25 +91,18 @@ private fun shimmerFinishingColor(
     var launchShimmering by launchShimmeringState
 
     var resetColor by remember { mutableStateOf(true) }
-    if (resetColor) {
-        val animatable = remember { Animatable(currentColor) }
-        LaunchedEffect(key1 = Unit) {
-            animatable.animateTo(
-                shimmerColors.placeholder,
-                tween(
-                    durationMillis = shimmerDurations.placeholderLeaving,
-                    easing = easing(false),
-                )
-            )
-            resetColor = false
-        }
-    }
 
     val color by when {
         resetColor -> {
             val animatable = remember { Animatable(currentColor) }
             LaunchedEffect(key1 = Unit) {
-                animatable.animateTo(shimmerColors.placeholder)
+                animatable.animateTo(
+                    shimmerColors.placeholder,
+                    tween(
+                        durationMillis = shimmerDurations.placeholderLeaving,
+                        easing = easing(false),
+                    )
+                )
                 resetColor = false
             }
             animatable.asState()
