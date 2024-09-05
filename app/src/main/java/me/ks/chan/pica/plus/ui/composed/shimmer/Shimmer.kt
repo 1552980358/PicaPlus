@@ -17,18 +17,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
+import androidx.compose.ui.layout.Measurable
+import androidx.compose.ui.layout.MeasureResult
+import androidx.compose.ui.layout.MeasureScope
 import androidx.compose.ui.node.DrawModifierNode
+import androidx.compose.ui.node.LayoutModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.isSpecified
 import kotlinx.coroutines.delay
 import me.ks.chan.pica.plus.resources.dimen.Sizing_12
+import kotlin.math.max
 
 fun Modifier.shimmer(
     enabled: Boolean = true,
+    size: ShimmerSize = ShimmerSize.Auto,
     colors: ShimmerColors = ShimmerDefaults.colors(),
     durations: ShimmerDurations = ShimmerDefaults.durations(),
     cornerRadiusDp: Dp = Sizing_12,
@@ -77,7 +86,7 @@ fun Modifier.shimmer(
         else -> { Color.Unspecified }
     }
 
-    this then ShimmerElement(enabled, color, cornerRadius)
+    this then ShimmerElement(enabled, color, size, cornerRadius)
 }
 
 @Composable
@@ -175,16 +184,23 @@ private fun shimmerColor(
 }
 
 private class ShimmerElement(
-    val enable: Boolean,
+    val enabled: Boolean,
     val color: Color,
+    val size: ShimmerSize,
     val cornerRadius: CornerRadius,
 ): ModifierNodeElement<ShimmerNode>() {
 
-    override fun create(): ShimmerNode = ShimmerNode(enable, color, cornerRadius)
+    override fun create() = ShimmerNode(
+        enabled = enabled,
+        color = color,
+        size = size,
+        cornerRadius = cornerRadius,
+    )
 
     override fun update(node: ShimmerNode) {
-        node.drawShimmer = enable
-        node.currentColor = color
+        node.enabled = enabled
+        node.color = color
+        node.size = size
         node.cornerRadius = cornerRadius
     }
 
@@ -193,18 +209,19 @@ private class ShimmerElement(
             return true
         }
         return other is ShimmerElement &&
-               other.enable == enable &&
+               other.enabled == enabled &&
                other.color.value == color.value &&
                other.cornerRadius.toString() == cornerRadius.toString()
     }
 
     override fun hashCode(): Int {
-        return "$enable$color$cornerRadius".hashCode()
+        return "$enabled,$color,$size,$cornerRadius".hashCode()
     }
 
     override fun InspectorInfo.inspectableProperties() {
         name = "Shimmer"
-        properties["enable"] = enable
+        properties["enabled"] = enabled
+        properties["size"] = size
         properties["color"] = color
         properties["cornerRadius"] = cornerRadius
     }
@@ -212,16 +229,66 @@ private class ShimmerElement(
 }
 
 private class ShimmerNode(
-    var drawShimmer: Boolean,
-    var currentColor: Color,
+    var enabled: Boolean,
+    var color: Color,
+    var size: ShimmerSize,
     var cornerRadius: CornerRadius,
-): Modifier.Node(), DrawModifierNode {
+): Modifier.Node(), LayoutModifierNode, DrawModifierNode {
+
+    private var roundRectSize = Size(0F, 0F)
+
+    override fun MeasureScope.measure(
+        measurable: Measurable,
+        constraints: Constraints
+    ): MeasureResult {
+        val placeable = measurable.measure(constraints)
+
+        val size = size
+        return when {
+            size is ShimmerSize.Minimum && enabled -> {
+                val width = when {
+                    size.width.isSpecified -> {
+                        max(placeable.width, size.width.roundToPx())
+                    }
+                    else -> { placeable.width }
+                }
+                val height = when {
+                    size.height.isSpecified -> {
+                        max(placeable.height, size.height.roundToPx())
+                    }
+                    else -> { placeable.height }
+                }
+
+                roundRectSize = Size(width.toFloat(), height.toFloat())
+
+                layout(width, height) { placeable.place(0, 0) }
+            }
+            else -> {
+                if (enabled) {
+                    roundRectSize = Size(
+                        placeable.width.toFloat(),
+                        placeable.height.toFloat(),
+                    )
+                }
+
+                layout(placeable.width, placeable.height) {
+                    placeable.place(0, 0)
+                }
+            }
+        }
+    }
+
     override fun ContentDrawScope.draw() {
         when {
-            drawShimmer -> {
-                drawRoundRect(color = currentColor, cornerRadius = cornerRadius)
+            enabled -> {
+                drawRoundRect(
+                    size = roundRectSize,
+                    color = color,
+                    cornerRadius = cornerRadius,
+                )
             }
             else -> { drawContent() }
         }
     }
+
 }
